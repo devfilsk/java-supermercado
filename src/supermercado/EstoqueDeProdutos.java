@@ -71,6 +71,7 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         
             while (produtosDoCodigo.size() > 0 && quantidade > 0) {                
                 produtosDoCodigo.remove(produto);
+                // tratar o remover para produtos quilo
                 System.out.println("Removendo um produto de codigo: " + codigo);
                 quantidade--;
             }
