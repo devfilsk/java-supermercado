@@ -62,21 +62,43 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         }
     }
     
-    public void removerProduto(Produto produto, double quantidade){
+    public void removerProduto(String codigo, double quantidade){
         List<Produto> produtosDoCodigo;
-        String codigo = produto.getCodigo();
+        boolean removerDoEstoque = false;
         
         if(estoque.containsKey(codigo)){
             produtosDoCodigo = estoque.get(codigo);
-        
-            while (produtosDoCodigo.size() > 0 && quantidade > 0) {                
-                produtosDoCodigo.remove(produto);
-                // tratar o remover para produtos quilo
-                System.out.println("Removendo um produto de codigo: " + codigo);
-                quantidade--;
+            p = produtosDoCodigo.get(0);
+            if (produtosDoCodigo.get(0) instanceof ProdutoUnitario) {
+                double temp = quantidade;
+                for (int i = 0; i < quantidade; i++) {
+                    if(produtosDoCodigo.size() > 0 && temp > 0) {                
+                        produtosDoCodigo.remove(produtosDoCodigo.get(0));
+                        //System.out.println("Removendo um produto de codigo: " + codigo);
+                        temp--;
+                    }
+                    else {
+                        System.out.println("ATENÇÃO! O estoque desse produto acabou."); 
+                        removerDoEstoque = true;
+                        break;
+                    }
+                }
             }
-            
-            estoque.put(codigo, produtosDoCodigo);
+            else if (p instanceof ProdutoQuilo){
+                ProdutoQuilo pdtQuilo = (ProdutoQuilo)p;    
+                double peso = pdtQuilo.getQtdQuilos() - quantidade;
+                removerDoEstoque = peso < 0 ? true : false;
+                pdtQuilo.setQtdQuilos(peso);
+                produtosDoCodigo.clear();
+                produtosDoCodigo.add(pdtQuilo);
+            }
+            // se a quantidade de produtos for = 0, mantem o codigo no estoque ou remove ?
+            if (removerDoEstoque) {
+                estoque.remove(codigo);
+            }
+            else{
+                estoque.put(codigo, produtosDoCodigo);
+            }
         }else{
             System.out.println("ATENÇÃO! Não existe produto em estoque."); 
         }
@@ -92,13 +114,13 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         while (listasDeCodigos.hasNext()) {
             String codigo = (String)listasDeCodigos.next();
             Iterator produtos = estoque.get(codigo).iterator();
-            System.out.println("Código: " + codigo);
             boolean mostrarNomeProduto = true;
            
             while (produtos.hasNext()) {
                 p = (Produto)produtos.next();
                 
                 if (mostrarNomeProduto) {
+                    System.out.println("Código: " + codigo);
                     System.out.println("Produto: " + p.getNome());
                     mostrarNomeProduto = false;
                 }

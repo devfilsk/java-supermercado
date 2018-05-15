@@ -6,6 +6,10 @@
  */
 package supermercado;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  *
  * @author Richiely Batista
@@ -16,23 +20,50 @@ public class Supermercado {
      * @param args the command line arguments
      */
     static EstoqueDeProdutos listaDeProdutos = new EstoqueDeProdutos();
+    static Scanner scanner = new Scanner(System.in);
     
     public static void main(String[] args) {
+        Saudacao();
         Feed();
+
+        Gerente ger = new Gerente("GERENTE DO MERCADO", "admin", "admin", listaDeProdutos);
+        OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", "f1", "1234", listaDeProdutos);
+        OperadorDeCaixa funcionario2 = new OperadorDeCaixa("Pedrinho", "f2", "1234" , listaDeProdutos);
+        OperadorDeCaixa funcionario3 = new OperadorDeCaixa("Joaozinho", "f3", "1234" , listaDeProdutos);
+        OperadorDeCaixa funcionario4 = new OperadorDeCaixa("Robertinho", "f4", "1234" , listaDeProdutos);
+        OperadorDeCaixa funcionario5 = new OperadorDeCaixa("Serginho","f5", "1234" , listaDeProdutos);
+        List<Funcionario> funcionarios = new LinkedList<Funcionario>();
         
-        Gerente ger = new Gerente("GERENTE DO MERCADO", listaDeProdutos);
-        
-        OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", listaDeProdutos);
-        funcionario1.mostrarEstoque();
-        funcionario1.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
+        funcionarios.add(ger);
+        funcionarios.add(funcionario1);
+        funcionarios.add(funcionario2);
+        funcionarios.add(funcionario3);
+        funcionarios.add(funcionario4);
+        funcionarios.add(funcionario5);
+
+//        funcionario1.mostrarEstoque();
+//        funcionario1.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
         
         ger.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
         ger.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
-        ger.mostrarEstoque();
+        funcionario1.removerProduto("20", 8);
+        funcionario1.removerProduto("21", 100);
+        
+        ger.emitirRelatorioDeEstoque();
+    }
+
+    private static void Saudacao() {
+        System.out.println("*********************************************************");
+        System.out.println("Bem vindo ao Sistema de Controle e Vendas do Supermercado");
+        System.out.println("*********************************************************");
+        System.out.println("Aperte ENTER para continuar ...");
+        scanner.nextLine();
     }
 
     private static void Feed() {
-        System.out.println("**** INICIANDO O ESTOQUE DE PRODUTOS DO SUPERMERCADO ****");
+        System.out.println("*********************************************************");
+        System.out.println("Carga inicial do estoque de produtos");
+        System.out.println("*********************************************************");
         ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
         // Adiciona 2 produtos1
         listaDeProdutos.adicionarProduto(leite, 2.0);
@@ -48,7 +79,9 @@ public class Supermercado {
         ProdutoQuilo melancia = new ProdutoQuilo("11", "Tomate", 3.50, 100);
         listaDeProdutos.adicionarProduto(melancia, 0);
         
-        listaDeProdutos.removerProduto(feijao,5.0);
+        System.out.println("Estoque criado com sucesso!");
+        System.out.println("Aperte ENTER para continuar ...");
+        scanner.nextLine();
     }
     
 }

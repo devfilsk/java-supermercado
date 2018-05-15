@@ -11,11 +11,16 @@ package supermercado;
  */
 public class Funcionario {
     private String nome;
+    private String userName;
+    private String senha;
+
     private EstoqueDeProdutos estoqueDeProdutos;
 
-    public Funcionario(String nome, EstoqueDeProdutos estoque) {
+    public Funcionario(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
         this.nome = nome;
-        estoqueDeProdutos = estoque;
+        this.estoqueDeProdutos = estoque;
+        this.userName = userName;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -32,5 +37,21 @@ public class Funcionario {
 
     public void setEstoqueDeProdutos(EstoqueDeProdutos estoqueDeProdutos) {
         this.estoqueDeProdutos = estoqueDeProdutos;
+    }
+    
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

@@ -12,9 +12,9 @@ import java.util.List;
  * @author Richiely Batista
  */
 public class Gerente extends Funcionario implements IOperacoesDoEstoque {
-
-    public Gerente(String nome, EstoqueDeProdutos estoque) {
-        super(nome, estoque);
+    
+    public Gerente(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
+        super(nome, userName, senha, estoque);
     }
 
     @Override
@@ -23,19 +23,26 @@ public class Gerente extends Funcionario implements IOperacoesDoEstoque {
     }
 
     @Override
-    public void removerProduto(Produto produto, double quantidade) {
-       this.getEstoqueDeProdutos().removerProduto(produto, quantidade);
+    public void removerProduto(String codigo, double quantidade) {
+       this.getEstoqueDeProdutos().removerProduto(codigo, quantidade);
     }
 
     @Override
     public void mostrarEstoque() {
         this.getEstoqueDeProdutos().mostrarEstoque();
     }
-    
-    public void emitirRelatorioDeVendas() {
-
-    }
 
     public void emitirRelatorioDeEstoque() {
+        System.out.println("*********************************************************");
+        System.out.println("RELATÓRIO DE ESTOQUE");
+        System.out.println("*********************************************************");
+        System.out.println("***** Estoque no INÍCIO do dia *****");
+        
+        //estoqueTemp.mostrarEstoque();
+        
+        System.out.println("*********************************************************");
+        System.out.println("***** Estoque no FINAL do dia *****");
+        
+        this.getEstoqueDeProdutos().mostrarEstoque();
     }
 }

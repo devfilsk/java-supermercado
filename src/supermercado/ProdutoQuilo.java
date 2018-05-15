@@ -22,7 +22,12 @@ public class ProdutoQuilo extends Produto{
     }
 
     public void setQtdQuilos(double qtdQuilos) {
-        this.qtdQuilos = qtdQuilos;
+        if (qtdQuilos < 0) {
+            this.qtdQuilos = 0;
+        }
+        else{
+            this.qtdQuilos = qtdQuilos;
+        }
     }
     
     @Override
