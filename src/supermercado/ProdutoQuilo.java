@@ -32,7 +32,7 @@ public class ProdutoQuilo extends Produto{
     
     @Override
     public double calcularValor(double quilos){
-        return qtdQuilos * this.getValor();
+        return quilos * this.getValor();
     }
     
 }

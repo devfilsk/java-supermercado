@@ -139,5 +139,20 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         }
         System.out.println();
     }
+ 
+    //Busca preço de produto por código
+    public static double precoPorCodigo(String codigo){
+        if(EstoqueDeProdutos.estoque.containsKey(codigo)){
+            Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
+            Produto produto = null;
+            if(it.hasNext()){
+                produto = (Produto) it.next();
+                return produto.calcularValor(1);
+            }else{
+                return 0.0;
+            }
+        }
+        return 0.0;
+    }
     
 }

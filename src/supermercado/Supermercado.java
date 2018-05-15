@@ -50,6 +50,8 @@ public class Supermercado {
         funcionario1.removerProduto("21", 100);
         
         ger.emitirRelatorioDeEstoque();
+        System.out.println(Leitor.mostrarValorProduto("11"));
+        
     }
 
     private static void Saudacao() {
