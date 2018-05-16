@@ -141,7 +141,7 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
     }
  
     //Busca preço de produto por código
-    public static double precoPorCodigo(String codigo){
+    /*public static double precoPorCodigo(String codigo){
         if(EstoqueDeProdutos.estoque.containsKey(codigo)){
             Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
             Produto produto = null;
@@ -153,6 +153,54 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
             }
         }
         return 0.0;
+    }*/
+    public static List produtoParaCompra(String codigo, int quantidade){
+        //Verifica se existe o produto no estoque e se possui a quantidade esperada
+        //if(EstoqueDeProdutos.estoque.containsKey(codigo) && EstoqueDeProdutos.estoque.get(codigo).size() >= quantidade){
+        List<Produto> produtosDoCodigo;
+        if(EstoqueDeProdutos.estoque.containsKey(codigo)){
+            Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
+             produtosDoCodigo = estoque.get(codigo);
+            return produtosDoCodigo;
+        }else{
+            System.out.println("Produto Indisponível");
+            return null;
+        }
+    }
+    
+     private static void exibirEstoqueCliente(){
+        Produto p = null;
+        System.out.println("***** PRODUTOS DISPONÍVEIS *****");
+        Iterator listasDeCodigos = EstoqueDeProdutos.estoque.keySet().iterator();
+        int quantidade = 0;
+        double quilos = 0;
+        while (listasDeCodigos.hasNext()) {
+            String codigo = (String)listasDeCodigos.next();
+            Iterator produtos = estoque.get(codigo).iterator();
+            boolean mostrarNomeProduto = true;
+           
+            while (produtos.hasNext()) {
+                p = (Produto)produtos.next();
+                
+                if (mostrarNomeProduto) {
+                    System.out.println("Código: " + codigo);
+                    System.out.println("Produto: " + p.getNome());
+                    mostrarNomeProduto = false;
+                }
+                if (p instanceof ProdutoQuilo) {
+                    ProdutoQuilo pdt = (ProdutoQuilo)p;
+                    System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
+                }
+
+                quantidade++;
+            }
+            
+            if (p instanceof ProdutoUnitario) {
+                System.out.println("Quantidade em estoque = " +quantidade + "\n");
+            }
+            quantidade = 0;
+        }
+        System.out.println();
     }
     
 }

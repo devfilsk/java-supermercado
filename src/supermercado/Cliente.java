@@ -2,23 +2,27 @@
 package supermercado;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class Cliente {
-    private ArrayList<Produto> carrinhoDeCompras;
+    private CarrinhoDeCompras carrinho;
     
     public Cliente(){
-        carrinhoDeCompras = new ArrayList<Produto>();
+        this.carrinho = new CarrinhoDeCompras();
     }
 
-    public ArrayList<Produto> getCarrinhoDeCompras() {
-        return carrinhoDeCompras;
+    public CarrinhoDeCompras getCarrinho() {
+        return carrinho;
     }
     
-    public void addProduto(Produto produto){
-        carrinhoDeCompras.add(produto);
-    }
-    public void realizarCompra(){
+    
+    public void addProdutoPorCodigo(String codigo){
         
+        
+    }
+    public CarrinhoDeCompras realizarCompra(){
+        return this.carrinho;
     }
     public String consultarValor(String codigo){
         return Leitor.mostrarValorProduto(codigo);

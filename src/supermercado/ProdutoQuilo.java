@@ -32,6 +32,9 @@ public class ProdutoQuilo extends Produto{
     
     @Override
     public double calcularValor(double quilos){
+        //double gramas;
+        //gramas = quilos / 1000;
+        //System.out.println("VALOOOOOOOOOOr" +gramas * this.getValor() );
         return quilos * this.getValor();
     }
     
