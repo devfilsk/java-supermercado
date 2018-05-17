@@ -2,6 +2,7 @@
 package supermercado;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Caixa {
     private ArrayList<Venda> vendas;
@@ -21,6 +22,10 @@ public class Caixa {
         // - calcularValorPorItem
         // - calcularValorPorPeso
         // Calcular troco do cliente se pagar em $
+    }
+    
+    public void calcularVenda(CarrinhoDeCompras carrinho){
+        
     }
     
     public void cancelarVenda(){
