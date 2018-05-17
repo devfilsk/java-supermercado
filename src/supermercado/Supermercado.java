@@ -26,81 +26,56 @@ public class Supermercado{
     public static void main(String[] args) {
         Saudacao();
         Feed();
-
-        Gerente ger = new Gerente("GERENTE DO MERCADO", "admin", "admin", listaDeProdutos);
+        Gerente gerente = new Gerente("GERENTE DO MERCADO", "admin", "admin", listaDeProdutos);
+        
         OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", "f1", "1234", listaDeProdutos);
         OperadorDeCaixa funcionario2 = new OperadorDeCaixa("Pedrinho", "f2", "1234" , listaDeProdutos);
         OperadorDeCaixa funcionario3 = new OperadorDeCaixa("Joaozinho", "f3", "1234" , listaDeProdutos);
         OperadorDeCaixa funcionario4 = new OperadorDeCaixa("Robertinho", "f4", "1234" , listaDeProdutos);
         OperadorDeCaixa funcionario5 = new OperadorDeCaixa("Serginho","f5", "1234" , listaDeProdutos);
+
         List<Funcionario> funcionarios = new LinkedList<Funcionario>();
         
-        //Criar caixas do supermercado
-        Caixa c1 = new Caixa(01, funcionario1);
-        Caixa c2 = new Caixa(02, funcionario2);
-        Caixa c3 = new Caixa(03, funcionario3);
-        
-        
-        
-        funcionarios.add(ger);
+        funcionarios.add(gerente);
         funcionarios.add(funcionario1);
         funcionarios.add(funcionario2);
         funcionarios.add(funcionario3);
         funcionarios.add(funcionario4);
         funcionarios.add(funcionario5);
 
-//        funcionario1.mostrarEstoque();
-//        funcionario1.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
+        //Criar caixas do supermercado
+        Caixa c1 = new Caixa(01, funcionario1);
+        Caixa c2 = new Caixa(02, funcionario2);
+        Caixa c3 = new Caixa(03, funcionario3);
         
-        ger.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
-        ger.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
-        funcionario1.removerProduto("20", 8);
-        funcionario1.removerProduto("21", 100);
-        
+//        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
+//        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
+//        funcionario1.removerProduto("20", 8);
+//        funcionario1.removerProduto("21", 100);
         
         //Criar carrinho de produtos
         //CarrinhoDeCompras carrinho1 = new CarrinhoDeCompras();
         
-        
-        
-        //ger.emitirRelatorioDeEstoque();
-        System.out.println(Leitor.mostrarValorProduto("11"));
+        //Leitor.mostrarValorProduto("11");
+        //Leitor.mostrarValorProduto("99");
         //exibirEstoqueCliente();
-        ger.emitirRelatorioDeEstoque();
-        listaDeProdutos.mostrarEstoque();
-        Comprar();
+        //gerente.emitirRelatorioDeEstoque();
         
+        Comprar();
     }
-    
    
     private static void Saudacao() {
-        System.out.println("*********************************************************");
-        System.out.println("Bem vindo ao Sistema de Controle e Vendas do Supermercado");
-        System.out.println("*********************************************************");
+        System.out.println("*****************************************************************");
+        System.out.println("*   Bem vindo ao Sistema de Controle e Vendas do Supermercado   *");
+        System.out.println("*****************************************************************");
+        System.out.println();
         System.out.println("Aperte ENTER para continuar ...");
         scanner.nextLine();
     }
 
     private static void Feed() {
-        System.out.println("*********************************************************");
-        System.out.println("Carga inicial do estoque de produtos");
-        System.out.println("*********************************************************");
-        ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
-        // Adiciona 2 produtos1
-        listaDeProdutos.adicionarProduto(leite, 2.0);
-        
-        ProdutoUnitario arroz = new ProdutoUnitario("20", "Arroz", 11.95);
-        // Adiciona 6 produto2
-        listaDeProdutos.adicionarProduto(arroz, 6.0);
-        
-        ProdutoUnitario feijao = new ProdutoUnitario("30", "Feijão", 4.99);
-        // Adiciona 8 feijao
-        listaDeProdutos.adicionarProduto(feijao, 8.0);
-        
-        ProdutoQuilo melancia = new ProdutoQuilo("11", "Tomate", 3.50, 100);
-        listaDeProdutos.adicionarProduto(melancia, 0);
-        
-        System.out.println("Estoque criado com sucesso!");
+        listaDeProdutos.Feed();
+        System.out.println();
         System.out.println("Aperte ENTER para continuar ...");
         scanner.nextLine();
     }
@@ -110,7 +85,7 @@ public class Supermercado{
         System.out.println("**************** OPERAÇÕES DE COMPRA ****************");
         System.out.println(" ( 1 ) PARA COMPRAR \n ( 0 ) PARA OUTRA OPERAÇÃO ");
         String comp = scanner.nextLine();
-        listaDeProdutos.mostrarEstoque();
+        EstoqueDeProdutos.mostrarEstoque();
         switch(comp){
             case "1":
                 //Cria um cliente e atibui um carrinho a ele
@@ -123,8 +98,6 @@ public class Supermercado{
                    
                     System.out.println("***** DIGITE O CÓDIGO DO PRODUTO  *****");
                     codigo = scanner.nextLine();
-                    
-                    
 
                     List produtos = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade);
                     //se existir produto em estoque, a quantidade e se o produto for por unidade
@@ -153,7 +126,7 @@ public class Supermercado{
                         Iterator it = produtos.iterator();
                         if(it.hasNext()){
                             Produto p = (Produto) it.next();
-                             System.out.println("***** QUANTOS KILOS DE "+p.getNome()+"?*****");
+                             System.out.println("***** QUANTOS KILOS DE "+p.getNome().toUpperCase()+"?*****");
                             quantidade = Integer.parseInt(scanner.nextLine());
                             cli.getCarrinho().addProduto(p);
                             cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + p.calcularValor(quantidade));

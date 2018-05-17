@@ -9,11 +9,10 @@ package supermercado;
  *
  * @author Richiely Batista
  */
-public class Funcionario {
+public class Funcionario implements IOperacoesDoEstoque{
     private String nome;
     private String userName;
     private String senha;
-
     private EstoqueDeProdutos estoqueDeProdutos;
 
     public Funcionario(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
@@ -53,5 +52,20 @@ public class Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public void adicionarProduto(Produto produto, double quantidade) {
+        this.estoqueDeProdutos.adicionarProduto(produto, quantidade);
+    }
+
+    @Override
+    public void removerProduto(String codigo, double quantidade) {
+        this.estoqueDeProdutos.removerProduto(codigo, quantidade);
+    }
+
+    @Override
+    public void mostrarEstoque() {
+        EstoqueDeProdutos.mostrarEstoque();
     }
 }

@@ -24,8 +24,9 @@ public class Cliente {
     public CarrinhoDeCompras realizarCompra(){
         return this.carrinho;
     }
-    public String consultarValor(String codigo){
-        return Leitor.mostrarValorProduto(codigo);
+    
+    public void consultarValor(String codigo){
+        Leitor.mostrarValorProduto(codigo);
     }
     
     

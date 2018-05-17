@@ -15,10 +15,10 @@ import java.util.Map;
  *
  * @author Richiely Batista
  */
-public class EstoqueDeProdutos implements IOperacoesDoEstoque{
+public class EstoqueDeProdutos {
     // key = codigo do produto , value = lista com a quantidade do mesmo produto em estoque
     private static Map<String, List<Produto>> estoque;
-    private Produto p;
+    private static Produto p;
     
     public EstoqueDeProdutos() {
         estoque = new LinkedHashMap<String, List<Produto>>();
@@ -106,7 +106,7 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         System.out.println();
     }
     
-    public void mostrarEstoque(){
+    public static void mostrarEstoque(){
         System.out.println("***** ESTOQUE DE PRODUTOS *****");
         Iterator listasDeCodigos = estoque.keySet().iterator();
         int quantidade = 0;
@@ -141,8 +141,8 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
     }
  
     //Busca preço de produto por código
-    /*public static double precoPorCodigo(String codigo){
-        if(EstoqueDeProdutos.estoque.containsKey(codigo)){
+    public static double precoPorCodigo(String codigo){
+        if(estoque.containsKey(codigo)){
             Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
             Produto produto = null;
             if(it.hasNext()){
@@ -153,7 +153,24 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
             }
         }
         return 0.0;
-    }*/
+    }
+    
+    public static Produto seekProduto(String codigo)
+    {
+        Produto produto = null;
+        if(estoque.containsKey(codigo)){
+            Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
+            
+            if(it.hasNext()){
+                produto = (Produto) it.next();
+                return produto;
+            }else{
+                System.out.println("Produto não encontrado!");
+            }
+        }
+        return produto;
+    }
+    
     public static List produtoParaCompra(String codigo, int quantidade){
         //Verifica se existe o produto no estoque e se possui a quantidade esperada
         //if(EstoqueDeProdutos.estoque.containsKey(codigo) && EstoqueDeProdutos.estoque.get(codigo).size() >= quantidade){
@@ -202,5 +219,38 @@ public class EstoqueDeProdutos implements IOperacoesDoEstoque{
         }
         System.out.println();
     }
+     
+    //public static EstoqueDeProdutos clonarEstoque(){
+        // Para clonar os valores e nÃ£o a referÃªncia, percorremos todo o estoque 
+        // e copiamos os produtos no novo objeto.
+//        EstoqueDeProdutos estoqueClone = new EstoqueDeProdutos();
+//        for (String codigo : estoque.keySet()) {
+//            estoqueClone.estoque.put(codigo, new LinkedList<Produto>());
+//            List<Produto> lista = estoque.get(codigo);
+//            for (Produto produto : lista) {
+//                estoqueClone.estoque.get(codigo).add(produto);
+//            }
+//        } 
+//        return estoqueClone;
+    //}
     
+    public void Feed(){
+        System.out.println("*****************************************************");
+        System.out.println("*       Carga inicial do estoque de produtos        *");
+        
+        ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
+        this.adicionarProduto(leite, 2.0);
+        
+        ProdutoUnitario arroz = new ProdutoUnitario("20", "Arroz", 11.95);
+        this.adicionarProduto(arroz, 6.0);
+        
+        ProdutoUnitario feijao = new ProdutoUnitario("30", "Feijão", 4.99);
+        this.adicionarProduto(feijao, 8.0);
+        
+        ProdutoQuilo melancia = new ProdutoQuilo("11", "Tomate", 3.50, 100);
+        this.adicionarProduto(melancia, 0);
+        
+        System.out.println("*             Estoque criado com sucesso!           *");
+        System.out.println("*****************************************************");
+    }
 }

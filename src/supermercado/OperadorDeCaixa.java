@@ -9,7 +9,7 @@ package supermercado;
  *
  * @author Richiely Batista
  */
-public class OperadorDeCaixa extends Funcionario implements IOperacoesDoEstoque {
+public class OperadorDeCaixa extends Funcionario  {
     
     public OperadorDeCaixa(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
         super(nome, userName, senha, estoque);
@@ -17,8 +17,10 @@ public class OperadorDeCaixa extends Funcionario implements IOperacoesDoEstoque 
 
     @Override
     public void adicionarProduto(Produto produto, double quantidade) {
-        System.out.println("**** ATENÇÃO ****");
-        System.out.println("Operadores de caixa NÂO podem adicionar produtos ao estoque. \n");
+        System.out.println("********************************************************************");
+        System.out.println("*                ATENÇÃO - OPERAÇÃO NÃO PERMITIDA                  *");
+        System.out.println("*   Operadores de caixa NÂO podem adicionar produtos ao estoque    *");
+        System.out.println("********************************************************************");
     }
 
     // Remover produto deve ser chamado ao efetuar venda
@@ -29,7 +31,11 @@ public class OperadorDeCaixa extends Funcionario implements IOperacoesDoEstoque 
 
     @Override
     public void mostrarEstoque() {
-        System.out.println("**** ATENÇÃO ****");
-        System.out.println("Operadores de caixa NÂO possuem acesso para mostrar o estoque.\n");
+        System.out.println("********************************************************************");
+        System.out.println("*                ATENÇÃO - OPERAÇÃO NÃO PERMITIDA                  *");
+        System.out.println("*  Operadores de caixa NÂO possuem acesso para mostrar o estoque   *");
+        System.out.println("********************************************************************");
     }
+    
+    public void vender(){}
 }

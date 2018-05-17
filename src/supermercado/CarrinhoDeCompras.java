@@ -8,7 +8,6 @@ public class CarrinhoDeCompras{
     private ArrayList<Produto> produtosCarrinho;
     private double valorCompra;
     
-    
     public CarrinhoDeCompras(){
         produtosCarrinho = new ArrayList<Produto>();
         valorCompra = 0;
