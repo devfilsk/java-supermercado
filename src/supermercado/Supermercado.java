@@ -104,20 +104,11 @@ public class Supermercado{
                     if(produtos != null && String.valueOf(codigo.charAt(codigo.length()-1)).equals(String.valueOf(0)) ){
                         System.out.println("PRODUTO UNITARIO");
                         Produto prod = (Produto) produtos.get(0);
-                        System.out.println("***** DIGITE A QUANTIDADE DE "+prod.getNome()+"  *****");
+                        System.out.println("***** DIGITE A QUANTIDADE DE "+prod.getNome().toUpperCase()+"  *****");
                         quantidade = Integer.parseInt(scanner.nextLine());
                         
-                        int cont = 0;
-                        while(cont < quantidade){
-                            Iterator it = produtos.iterator();
-                            if(it.hasNext()){
-                                Produto p = (Produto) it.next();
-                                cli.getCarrinho().addProduto(p);
-                                //cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra()+p.getValor());
-                                /******* Colocar aqui a remoção de cada produto do estoque ******/
-                            }
-                             cont ++;
-                        }
+                         cli.getCarrinho().addProduto(prod, quantidade);
+                        
                          cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + prod.calcularValor(quantidade));
                         //se for produto por kilo, não insere mais de um no carrinho
                     }else if(produtos != null && String.valueOf(codigo.charAt(codigo.length()-1)).equals(String.valueOf(1))){
@@ -126,9 +117,9 @@ public class Supermercado{
                         Iterator it = produtos.iterator();
                         if(it.hasNext()){
                             Produto p = (Produto) it.next();
-                             System.out.println("***** QUANTOS KILOS DE "+p.getNome().toUpperCase()+"?*****");
+                             System.out.println("***** QUANTIDADE DE "+p.getNome().toUpperCase()+" EM KILOS *****");
                             quantidade = Integer.parseInt(scanner.nextLine());
-                            cli.getCarrinho().addProduto(p);
+                            cli.getCarrinho().addProduto(p, quantidade);
                             cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + p.calcularValor(quantidade));
                         }
                     }

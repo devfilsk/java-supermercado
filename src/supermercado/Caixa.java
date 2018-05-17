@@ -14,19 +14,7 @@ public class Caixa {
         this.numeroDoCaixa = numero;
         this.operadorCaixa = operador;
         this.balanca = new Balanca();
-    }
-    
-    public void finalizarVenda(){
-        
-        // Calcular o valor total da compra usando o somatorio de:
-        // - calcularValorPorItem
-        // - calcularValorPorPeso
-        // Calcular troco do cliente se pagar em $
-    }
-    
-    public void calcularVenda(CarrinhoDeCompras carrinho){
-        
-    }
+    }    
     
     public void cancelarVenda(){
     }
