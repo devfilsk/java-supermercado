@@ -41,7 +41,7 @@ public class Supermercado{
             int chances = 3;
             int tentativas = 0;
             System.out.println("**************** ACESSO ****************");
-            System.out.println(" ( 1 ) Ger0ente \n ( 2 ) Funcionário \n ( 3 ) Cliente \n ( 0 ) Sair do sistema");
+            System.out.println(" ( 1 ) Gerente \n ( 2 ) Funcionário \n ( 3 ) Cliente \n ( 0 ) Sair do sistema");
             opcao = scanner.nextLine();
         
             switch(opcao){
@@ -74,11 +74,9 @@ public class Supermercado{
                                         break;
                                     case "0":
                                         System.out.println("Voltando para o menu de acesso...");
-                                        //scanner.nextLine();
                                         sairMenuGer = true;
                                         break;
                                     default:
-                                        //scanner.nextLine();
                                         break;
                                 }
                                 scanner.nextLine();
@@ -89,7 +87,7 @@ public class Supermercado{
                             tentativas++;
                         }
                     }while(tentativas < chances && !acessou);
-                    if ( tentativas >= chances && !acessou) {  
+                    if (tentativas >= chances && !acessou) {  
                         System.out.println("As tentativas de login acabaram.\nSaindo...");
                         scanner.nextLine();
                     }  
@@ -100,23 +98,91 @@ public class Supermercado{
                         MostrarMenuListaDeCaixas(caixas);
                         String opCaixa = scanner.next();
                         sairMenuOperador = true;
-                        System.out.println("Operador, digite sua senha");
+                        
                         switch(opCaixa){
                             case "1":
-                                String senhaCaixa = scanner.next();
-                                if (senhas.contains(senhaCaixa)) {
-                                    Funcionario f = (Funcionario)funcionarios.stream().filter(x->x.getSenha().equals(senhaCaixa)).findFirst().get();
-                                    System.out.println("****    Bem vindo ao Caixa 1 , " + f.getNome() + "    ****");
-                                    System.out.println();
-                                    sairMenuOperador = true;
+                                Caixa c1 = caixas.get(0);
+                                if (c1.getOperadorCaixa() == null) {
+                                    Boolean acessouCaixa = false;
+                                    do{
+                                        System.out.println("Operador, digite sua senha");
+                                        String senhaCaixa = scanner.next();
+                                        if (senhas.contains(senhaCaixa)){
+                                            Funcionario f = (Funcionario)funcionarios.stream().filter(x->x.getSenha().equals(senhaCaixa)).findFirst().get();
+                                            if(FuncionarioLogado(senhaCaixa) == null){
+                                                System.out.println("****    Bem vindo ao Caixa 1 , " + f.getNome() + "    ****");
+                                                System.out.println();
+                                                c1.setOperadorCaixa(f);
+                                                sairMenuOperador = true;
+                                                acessouCaixa = true;
+                                            }else{
+                                                System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
+                                            }
+                                        }else{
+                                            System.out.println("Senha incorreta.");
+                                            tentativas++;
+                                        }
+                                    }while(tentativas < chances && !acessouCaixa);
+                                }else{
+                                    System.out.println("LOGOUT EFETUADO NO CAIXA 1\nCAIXA 1 ESTÁ LIVRE");
+                                    c1.setOperadorCaixa(null);
                                 }
                                 break;
                             case "2":
-                                gerente.emitirRelatorioDeEstoque();
-
+                                Caixa c2 = caixas.get(1);
+                                if (c2.getOperadorCaixa() == null) {
+                                    Boolean acessouCaixa = false;
+                                    do{
+                                        System.out.println("Operador, digite sua senha");
+                                        String senhaCaixa = scanner.next();
+                                        if (senhas.contains(senhaCaixa)){
+                                            Funcionario f = (Funcionario)funcionarios.stream().filter(x->x.getSenha().equals(senhaCaixa)).findFirst().get();
+                                            if(FuncionarioLogado(senhaCaixa) == null){
+                                                System.out.println("****    Bem vindo ao Caixa 2 , " + f.getNome() + "    ****");
+                                                System.out.println();
+                                                c2.setOperadorCaixa(f);
+                                                sairMenuOperador = true;
+                                                acessouCaixa = true;
+                                            }else{
+                                                System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
+                                            }
+                                        }else{
+                                            System.out.println("Senha incorreta.");
+                                            tentativas++;
+                                        }
+                                    }while(tentativas < chances && !acessouCaixa);
+                                }else{
+                                    System.out.println("LOGOUT EFETUADO NO CAIXA 2\nCAIXA 2 ESTÁ LIVRE");
+                                    c2.setOperadorCaixa(null);
+                                }
                                 break;
                             case "3":
-                                gerente.emitirRelatorioDeVendas();
+                                Caixa c3 = caixas.get(2);
+                                if (c3.getOperadorCaixa() == null) {
+                                    Boolean acessouCaixa = false;
+                                    do{
+                                        System.out.println("Operador, digite sua senha");
+                                        String senhaCaixa = scanner.next();
+                                        if (senhas.contains(senhaCaixa)){
+                                            Funcionario f = (Funcionario)funcionarios.stream().filter(x->x.getSenha().equals(senhaCaixa)).findFirst().get();
+                                            if(FuncionarioLogado(senhaCaixa) == null){
+                                                System.out.println("****    Bem vindo ao Caixa 3 , " + f.getNome() + "    ****");
+                                                System.out.println();
+                                                c3.setOperadorCaixa(f);
+                                                sairMenuOperador = true;
+                                                acessouCaixa = true;
+                                            }else{
+                                                System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
+                                            }
+                                        }else{
+                                            System.out.println("Senha incorreta.");
+                                            tentativas++;
+                                        }
+                                    }while(tentativas < chances && !acessouCaixa);
+                                }else{
+                                    System.out.println("LOGOUT EFETUADO NO CAIXA 3\nCAIXA 3 ESTÁ LIVRE");
+                                    c3.setOperadorCaixa(null);
+                                }
                                 break;
                             case "0":
                                 sairMenuOperador = true;
@@ -129,6 +195,7 @@ public class Supermercado{
                     break;
                 case "3":
                     System.out.println("**************** Bem vindo, caro cliente! ****************");
+                    Comprar();
                     break;
                 case "0":
                     sairMenu = true;
@@ -186,9 +253,9 @@ public class Supermercado{
         funcionarios.add(funcionario5);
 
         //Criar caixas do supermercado
-        Caixa c1 = new Caixa(01, funcionario1);
-        Caixa c2 = new Caixa(02, funcionario2);
-        Caixa c3 = new Caixa(03, funcionario3);
+        Caixa c1 = new Caixa(01);
+        Caixa c2 = new Caixa(02);
+        Caixa c3 = new Caixa(03);
         
         caixas.add(c1); //[0]
         caixas.add(c2); //[1]
@@ -210,19 +277,21 @@ public class Supermercado{
         int op = 1;
         while (i.hasNext()) {
             Caixa caixa = (Caixa)i.next();
-            if (caixa.getOperadorCaixa()!= null) { // se não tiver operador setado
+            if (caixa.getOperadorCaixa() ==  null) { // se não tiver operador setado
                 System.out.print("  " + op + "- " + caixa +"\n");
             }
             else{
-                System.out.print("  " + op + "- Logout " + caixa +"\n");
+                System.out.print("  " + op + "- Logout " + caixa +" ("+caixa.getOperadorCaixa().getNome()+")\n");
             }    
             op++;
         }
         System.out.println("  0- Sair");
         System.out.println("*****************************************************************");
-        System.out.println();
     }
     
+    private static Caixa FuncionarioLogado(String senha){
+        return (Caixa)caixas.stream().filter(c->c.getOperadorCaixa() != null && c.getOperadorCaixa().getSenha().equals(senha)).findFirst().orElse(null);
+    }
     //ações de comprar vários produtos no mercado
     private static void Comprar(){
         System.out.println("**************** OPERAÇÕES DE COMPRA ****************");

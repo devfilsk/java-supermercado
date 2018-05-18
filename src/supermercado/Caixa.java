@@ -16,6 +16,11 @@ public class Caixa {
         this.balanca = new Balanca();
     }    
 
+    public Caixa(int numero){
+        this.numeroDoCaixa = numero;
+        this.balanca = new Balanca();
+    }    
+
     public int getNumeroDoCaixa() {
         return numeroDoCaixa;
     }
