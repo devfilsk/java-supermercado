@@ -13,14 +13,21 @@ public class Funcionario implements IOperacoesDoEstoque{
     private String nome;
     private String userName;
     private String senha;
-    private EstoqueDeProdutos estoqueDeProdutos;
+//    private EstoqueDeProdutos estoqueDeProdutos;
 
-    public Funcionario(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
+    public Funcionario(String nome, String userName, String senha) {
         this.nome = nome;
-        this.estoqueDeProdutos = estoque;
+    //    this.estoqueDeProdutos = estoque;
         this.userName = userName;
         this.senha = senha;
     }
+    
+//    public Funcionario(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
+//        this.nome = nome;
+//        this.estoqueDeProdutos = estoque;
+//        this.userName = userName;
+//        this.senha = senha;
+//    }
 
     public String getNome() {
         return nome;
@@ -30,13 +37,13 @@ public class Funcionario implements IOperacoesDoEstoque{
         this.nome = nome;
     }
 
-    public EstoqueDeProdutos getEstoqueDeProdutos() {
-        return estoqueDeProdutos;
-    }
-
-    public void setEstoqueDeProdutos(EstoqueDeProdutos estoqueDeProdutos) {
-        this.estoqueDeProdutos = estoqueDeProdutos;
-    }
+//    public EstoqueDeProdutos getEstoqueDeProdutos() {
+//        return estoqueDeProdutos;
+//    }
+//
+//    public void setEstoqueDeProdutos(EstoqueDeProdutos estoqueDeProdutos) {
+//        this.estoqueDeProdutos = estoqueDeProdutos;
+//    }
     
     public String getUserName() {
         return userName;
@@ -56,12 +63,13 @@ public class Funcionario implements IOperacoesDoEstoque{
 
     @Override
     public void adicionarProduto(Produto produto, double quantidade) {
-        this.estoqueDeProdutos.adicionarProduto(produto, quantidade);
+        //this.estoqueDeProdutos.adicionarProduto(produto, quantidade);
+        EstoqueDeProdutos.adicionarProduto(produto, quantidade);
     }
 
     @Override
     public void removerProduto(String codigo, double quantidade) {
-        this.estoqueDeProdutos.removerProduto(codigo, quantidade);
+        EstoqueDeProdutos.removerProduto(codigo, quantidade);
     }
 
     @Override

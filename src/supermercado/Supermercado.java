@@ -6,6 +6,7 @@
  */
 package supermercado;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,31 +23,120 @@ public class Supermercado{
      */
     static EstoqueDeProdutos listaDeProdutos = new EstoqueDeProdutos();
     static Scanner scanner = new Scanner(System.in);
+    static List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+    static List<Caixa> caixas = new ArrayList<Caixa>();
+    static List<String> senhas = new ArrayList<String>()
+    {{ add("1111"); add("1122"); add("1133"); add("1144"); add("1155"); }};
     
     public static void main(String[] args) {
-        Saudacao();
+        //Saudacao();
         Feed();
-        Gerente gerente = new Gerente("GERENTE DO MERCADO", "admin", "admin", listaDeProdutos);
+        CriarFuncionarios();
         
-        OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", "f1", "1234", listaDeProdutos);
-        OperadorDeCaixa funcionario2 = new OperadorDeCaixa("Pedrinho", "f2", "1234" , listaDeProdutos);
-        OperadorDeCaixa funcionario3 = new OperadorDeCaixa("Joaozinho", "f3", "1234" , listaDeProdutos);
-        OperadorDeCaixa funcionario4 = new OperadorDeCaixa("Robertinho", "f4", "1234" , listaDeProdutos);
-        OperadorDeCaixa funcionario5 = new OperadorDeCaixa("Serginho","f5", "1234" , listaDeProdutos);
-
-        List<Funcionario> funcionarios = new LinkedList<Funcionario>();
+        Gerente gerente = (Gerente)funcionarios.get(0);
         
-        funcionarios.add(gerente);
-        funcionarios.add(funcionario1);
-        funcionarios.add(funcionario2);
-        funcionarios.add(funcionario3);
-        funcionarios.add(funcionario4);
-        funcionarios.add(funcionario5);
+        String opcao = "";
+        Boolean sairMenu = false;
+        do{
+            int chances = 3;
+            int tentativas = 0;
+            System.out.println("**************** ACESSO ****************");
+            System.out.println(" ( 1 ) Ger0ente \n ( 2 ) Funcionário \n ( 3 ) Cliente \n ( 0 ) Sair do sistema");
+            opcao = scanner.nextLine();
+        
+            switch(opcao){
+                case "1":
+                    System.out.println("****    Login   ****");
+                    Boolean acessou = false;
+                    do{
+                        System.out.println("Senha: ");
+                        String senha = scanner.next();
+                        if (gerente.getSenha().equals(senha)) {
+                            acessou = true;
+                            System.out.println("**************** Bem vindo, " + gerente.getNome() + "! ****************");
+                            String opcaoFunGer = "";
+                            Boolean sairMenuGer = false;
+                            do{
+                                MostrarMenuGerente();
+                                opcaoFunGer = scanner.next();
+                                switch(opcaoFunGer){
+                                    case "1": // adicionar produto
+                                        System.out.println("adicionando");
+                                        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
+                                        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
+                                        break;
+                                    case "2": // emitir relatorio estoque
+                                        gerente.emitirRelatorioDeEstoque();
+                                        break;
+                                    case "3": // emitir relatorio vendas
+                                        gerente.emitirRelatorioDeVendas();
+                                        System.out.println("emitindo vendas...");
+                                        break;
+                                    case "0":
+                                        System.out.println("Voltando para o menu de acesso...");
+                                        //scanner.nextLine();
+                                        sairMenuGer = true;
+                                        break;
+                                    default:
+                                        //scanner.nextLine();
+                                        break;
+                                }
+                                scanner.nextLine();
+                            }while(!sairMenuGer);
+                        }
+                        else{
+                            System.out.println("Senha incorreta.");
+                            tentativas++;
+                        }
+                    }while(tentativas < chances && !acessou);
+                    if ( tentativas >= chances && !acessou) {  
+                        System.out.println("As tentativas de login acabaram.\nSaindo...");
+                        scanner.nextLine();
+                    }  
+                    break;
+                case "2":
+                    Boolean sairMenuOperador = false;
+                    do{
+                        MostrarMenuListaDeCaixas(caixas);
+                        String opCaixa = scanner.next();
+                        sairMenuOperador = true;
+                        System.out.println("Operador, digite sua senha");
+                        switch(opCaixa){
+                            case "1":
+                                String senhaCaixa = scanner.next();
+                                if (senhas.contains(senhaCaixa)) {
+                                    Funcionario f = (Funcionario)funcionarios.stream().filter(x->x.getSenha().equals(senhaCaixa)).findFirst().get();
+                                    System.out.println("****    Bem vindo ao Caixa 1 , " + f.getNome() + "    ****");
+                                    System.out.println();
+                                    sairMenuOperador = true;
+                                }
+                                break;
+                            case "2":
+                                gerente.emitirRelatorioDeEstoque();
 
-        //Criar caixas do supermercado
-        Caixa c1 = new Caixa(01, funcionario1);
-        Caixa c2 = new Caixa(02, funcionario2);
-        Caixa c3 = new Caixa(03, funcionario3);
+                                break;
+                            case "3":
+                                gerente.emitirRelatorioDeVendas();
+                                break;
+                            case "0":
+                                sairMenuOperador = true;
+                                break;
+                            default:
+                                break;
+                        }        
+                    }while(!sairMenuOperador);
+                    scanner.nextLine();
+                    break;
+                case "3":
+                    System.out.println("**************** Bem vindo, caro cliente! ****************");
+                    break;
+                case "0":
+                    sairMenu = true;
+                    break;
+                default:
+                    break;
+            }
+        }while(!sairMenu);
         
 //        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
 //        gerente.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
@@ -61,7 +151,7 @@ public class Supermercado{
         //exibirEstoqueCliente();
         //gerente.emitirRelatorioDeEstoque();
         
-        Comprar();
+       // Comprar();
     }
    
     private static void Saudacao() {
@@ -76,8 +166,61 @@ public class Supermercado{
     private static void Feed() {
         listaDeProdutos.Feed();
         System.out.println();
-        System.out.println("Aperte ENTER para continuar ...");
-        scanner.nextLine();
+//        System.out.println("Aperte ENTER para continuar ...");
+//        scanner.nextLine();
+    }
+    
+    private static void CriarFuncionarios(){
+        Gerente gerente = new Gerente("GERENTE DO MERCADO", "admin", "admin" );
+        OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", "f1", "1111" );
+        OperadorDeCaixa funcionario2 = new OperadorDeCaixa("Pedrinho", "f2", "1122"  );
+        OperadorDeCaixa funcionario3 = new OperadorDeCaixa("Joaozinho", "f3", "1133" );
+        OperadorDeCaixa funcionario4 = new OperadorDeCaixa("Robertinho", "f4", "1144"  );
+        OperadorDeCaixa funcionario5 = new OperadorDeCaixa("Serginho","f5", "1155" );
+
+        funcionarios.add(gerente);          //[0]
+        funcionarios.add(funcionario1);     
+        funcionarios.add(funcionario2);     
+        funcionarios.add(funcionario3);     
+        funcionarios.add(funcionario4);
+        funcionarios.add(funcionario5);
+
+        //Criar caixas do supermercado
+        Caixa c1 = new Caixa(01, funcionario1);
+        Caixa c2 = new Caixa(02, funcionario2);
+        Caixa c3 = new Caixa(03, funcionario3);
+        
+        caixas.add(c1); //[0]
+        caixas.add(c2); //[1]
+        caixas.add(c3); //[2]
+    }
+    
+    private static void MostrarMenuGerente(){
+        System.out.println("*****************************************************************");
+        System.out.println("   1- Adicionar produto no estoque \n   2- Emitir relatório de estoque \n   3- Emitir relatório de vendas \n   0- Logout ");
+        System.out.println("*****************************************************************");
+        System.out.println();
+    }
+    
+    private static void MostrarMenuListaDeCaixas(List<Caixa> caixas){
+        System.out.println("*****************************************************************");
+        
+        System.out.println("    CAIXAS   ");
+        Iterator i = caixas.iterator();
+        int op = 1;
+        while (i.hasNext()) {
+            Caixa caixa = (Caixa)i.next();
+            if (caixa.getOperadorCaixa()!= null) { // se não tiver operador setado
+                System.out.print("  " + op + "- " + caixa +"\n");
+            }
+            else{
+                System.out.print("  " + op + "- Logout " + caixa +"\n");
+            }    
+            op++;
+        }
+        System.out.println("  0- Sair");
+        System.out.println("*****************************************************************");
+        System.out.println();
     }
     
     //ações de comprar vários produtos no mercado

@@ -11,8 +11,8 @@ package supermercado;
  */
 public class OperadorDeCaixa extends Funcionario  {
     
-    public OperadorDeCaixa(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
-        super(nome, userName, senha, estoque);
+    public OperadorDeCaixa(String nome, String userName, String senha) {
+        super(nome, userName, senha);
     }
 
     @Override
@@ -26,7 +26,8 @@ public class OperadorDeCaixa extends Funcionario  {
     // Remover produto deve ser chamado ao efetuar venda
     @Override
     public void removerProduto(String codigo, double quantidade) {
-        this.getEstoqueDeProdutos().removerProduto(codigo, quantidade);
+        //this.getEstoqueDeProdutos().removerProduto(codigo, quantidade);
+        EstoqueDeProdutos.removerProduto(codigo, quantidade);
     }
 
     @Override

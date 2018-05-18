@@ -17,14 +17,14 @@ import java.util.Map;
  */
 public class EstoqueDeProdutos {
     // key = codigo do produto , value = lista com a quantidade do mesmo produto em estoque
-    private static Map<String, List<Produto>> estoque;
+    public static Map<String, List<Produto>> estoque;
     private static Produto p;
     
     public EstoqueDeProdutos() {
         estoque = new LinkedHashMap<String, List<Produto>>();
     }
     
-    public void adicionarProduto(Produto produto, double quantidade){
+    public static void adicionarProduto(Produto produto, double quantidade){
         List<Produto> produtosDoCodigo;
         String codigo = produto.getCodigo();
         
@@ -62,7 +62,7 @@ public class EstoqueDeProdutos {
         }
     }
     
-    public void removerProduto(String codigo, double quantidade){
+    public static void removerProduto(String codigo, double quantidade){
         List<Produto> produtosDoCodigo;
         boolean removerDoEstoque = false;
         

@@ -19,10 +19,15 @@ public class Gerente extends Funcionario {
     
     private EstoqueDeProdutos estoqueTemp;
     
-    public Gerente(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
-        super(nome, userName, senha, estoque);
-        //this.estoqueTemp = EstoqueDeProdutos.clonarEstoque();
+    
+    public Gerente(String nome, String userName, String senha) {
+        super(nome, userName, senha);
     }
+    
+//    public Gerente(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
+//        super(nome, userName, senha, estoque);
+//        //this.estoqueTemp = EstoqueDeProdutos.clonarEstoque();
+//    }
 
     public void emitirRelatorioDeEstoque() {
         System.out.println("*********************************************************");
@@ -30,6 +35,7 @@ public class Gerente extends Funcionario {
         System.out.println("*********************************************************");
         System.out.println("***** Estoque no INÍCIO do dia *****");
         
+        // TODO
         //estoqueTemp.mostrarEstoque();
         
         System.out.println("*********************************************************");

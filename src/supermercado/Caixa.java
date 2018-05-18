@@ -15,6 +15,22 @@ public class Caixa {
         this.operadorCaixa = operador;
         this.balanca = new Balanca();
     }    
+
+    public int getNumeroDoCaixa() {
+        return numeroDoCaixa;
+    }
+
+    public void setNumeroDoCaixa(int numeroDoCaixa) {
+        this.numeroDoCaixa = numeroDoCaixa;
+    }
+
+    public Funcionario getOperadorCaixa() {
+        return operadorCaixa;
+    }
+
+    public void setOperadorCaixa(Funcionario operadorCaixa) {
+        this.operadorCaixa = operadorCaixa;
+    }
     
     public void cancelarVenda(){
     }
@@ -26,5 +42,12 @@ public class Caixa {
     private double calcularValorPorPeso(double valorDoPeso, double quantidade){
         return balanca.calcularValorPorPeso(valorDoPeso, quantidade);
     } 
+
+    @Override
+    public String toString() {
+        return "Caixa " + numeroDoCaixa;
+    }
+    
+    
     
 }
