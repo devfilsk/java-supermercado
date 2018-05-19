@@ -10,7 +10,7 @@ package supermercado;
  * @author Richiely Batista
  */
 public class OperadorDeCaixa extends Funcionario  {
-    
+   
     public OperadorDeCaixa(String nome, String userName, String senha) {
         super(nome, userName, senha);
     }
@@ -38,5 +38,4 @@ public class OperadorDeCaixa extends Funcionario  {
         System.out.println("********************************************************************");
     }
     
-    public void vender(){}
 }

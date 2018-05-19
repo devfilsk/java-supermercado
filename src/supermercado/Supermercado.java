@@ -341,11 +341,19 @@ public class Supermercado{
                     
                     //limpa cache do teclado para a entrada de dados
                     scanner.nextLine();
-                    
-                }
-                 if(continuar.equals("2")){
-                        System.out.println("VALOR DA SUA COMPRA É: "+cli.realizarCompra().calcularValorCompra());
+                    if(continuar.equals("2")){
+                        MostrarMenuListaDeCaixas(caixas);
+                        //System.out.println("VALOR DA SUA COMPRA É: "+cli.realizarCompra().calcularValorCompra());
+                        /****** ADICIONAR AQUI AS SELEÇÕES PARA OS CAIXAS *******/
+                        
+                        System.out.println("VALOR DA SUA COMPRA É: "+cli.getCarrinho().calcularPrecoCarrinho());
+                        cli.getCarrinho().exibirCarrinhoCliente();
+                        cli.realizarCompra(caixas.get(0));
+                        
+                        
                     }
+                }
+                 
                 break; 
         }
         

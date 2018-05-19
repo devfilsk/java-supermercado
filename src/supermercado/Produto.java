@@ -13,6 +13,7 @@ public abstract class Produto {
     private String nome;
     private String codigo;
     private double valor;
+    //private double peso; // somente utilizado para os produtos por kilo
 
     public Produto(String codigo, String nome, double valor) {
         this.nome = nome;
@@ -23,7 +24,6 @@ public abstract class Produto {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }

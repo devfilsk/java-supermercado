@@ -16,12 +16,9 @@ public class Cliente {
         return carrinho;
     }
     
-    
-    public void addProdutoPorCodigo(String codigo){
-        
-    }
-    public CarrinhoDeCompras realizarCompra(){
-        return this.carrinho;
+    //Para realizar a compra, o cliente escolhe um caixa disponível
+    public void realizarCompra(Caixa caixa){
+        caixa.iniciarVenda(this);
     }
     
     public void consultarValor(String codigo){

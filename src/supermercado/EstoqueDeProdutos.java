@@ -39,7 +39,7 @@ public class EstoqueDeProdutos {
             }
             else if (produto instanceof ProdutoQuilo) {
                 ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
-                pdt.setQtdQuilos(pdt.getQtdQuilos() + ((ProdutoQuilo) produto).getQtdQuilos());
+                pdt.setQtdQuilos(pdt.getQtdQuilos() + quantidade);
                 produtosDoCodigo = new LinkedList<Produto>();
                 produtosDoCodigo.add(pdt);
             }

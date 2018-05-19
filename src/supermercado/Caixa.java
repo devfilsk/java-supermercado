@@ -3,12 +3,15 @@ package supermercado;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Caixa {
     private ArrayList<Venda> vendas;
     private Funcionario operadorCaixa;
     private int numeroDoCaixa;
     private Balanca balanca;
+    
     
     public Caixa(int numero, OperadorDeCaixa operador){
         this.numeroDoCaixa = numero;
@@ -20,7 +23,7 @@ public class Caixa {
         this.numeroDoCaixa = numero;
         this.balanca = new Balanca();
     }    
-
+    
     public int getNumeroDoCaixa() {
         return numeroDoCaixa;
     }
@@ -33,12 +36,14 @@ public class Caixa {
         return operadorCaixa;
     }
 
-    public void setOperadorCaixa(Funcionario operadorCaixa) {
+    public void setOperadorCaixa(Funcionario  operadorCaixa) {
         this.operadorCaixa = operadorCaixa;
     }
     
     public void cancelarVenda(){
+        
     }
+    
 
     private double calcularValorPorItem(double valorDaUnidadeProduto, int quantidade){
         return balanca.calcularValorPorItem(valorDaUnidadeProduto, quantidade);
@@ -51,6 +56,14 @@ public class Caixa {
     @Override
     public String toString() {
         return "Caixa " + numeroDoCaixa;
+    }
+    
+    public void iniciarVenda(Cliente cliente){
+        Venda venda = new Venda(this, cliente);
+        venda.vender();
+        
+        System.out.println("VENDA INICIADA");
+        
     }
     
     
