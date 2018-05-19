@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,10 +19,19 @@ import java.util.Map;
 public class EstoqueDeProdutos {
     // key = codigo do produto , value = lista com a quantidade do mesmo produto em estoque
     public static Map<String, List<Produto>> estoque;
+    private static Map<String, List<Produto>> copiaDoEstoque;
     private static Produto p;
     
     public EstoqueDeProdutos() {
         estoque = new LinkedHashMap<String, List<Produto>>();
+    }
+
+    private static Map<String, List<Produto>> getCopiaDoEstoque() {
+        return copiaDoEstoque;
+    }
+
+    private static void setCopiaDoEstoque(Map<String, List<Produto>> copiaDoEstoque) {
+        copiaDoEstoque = copiaDoEstoque;
     }
     
     public static void adicionarProduto(Produto produto, double quantidade){
@@ -78,7 +88,7 @@ public class EstoqueDeProdutos {
                         temp--;
                     }
                     else {
-                        System.out.println("ATENÇÃO! O estoque desse produto acabou."); 
+                        //System.out.println("ATENÇÃO! O estoque desse produto acabou: " + p.getNome()); 
                         removerDoEstoque = true;
                         break;
                     }
@@ -92,21 +102,27 @@ public class EstoqueDeProdutos {
                 produtosDoCodigo.clear();
                 produtosDoCodigo.add(pdtQuilo);
             }
-            // se a quantidade de produtos for = 0, mantem o codigo no estoque ou remove ?
             if (removerDoEstoque) {
+                System.out.println("ATENÇÃO! O estoque desse produto acabou: " + p.getNome()); 
                 estoque.remove(codigo);
             }
             else{
                 estoque.put(codigo, produtosDoCodigo);
             }
         }else{
-            System.out.println("ATENÇÃO! Não existe produto em estoque."); 
+            System.out.println("ATENÇÃO! Não existe produto em estoque com o código " + codigo + "."); 
         }
-        
         System.out.println();
     }
     
-    public static void mostrarEstoque(){
+    public static void mostrarEstoque(int opcaoDeEstoque){
+        Map<String, List<Produto>> estoqueTemp;
+        if (opcaoDeEstoque == 1) {
+            estoqueTemp = estoque;
+        }
+        else if (opcaoDeEstoque == 2) {
+            estoqueTemp = getCopiaDoEstoque();
+        }
         System.out.println("***** ESTOQUE DE PRODUTOS *****");
         Iterator listasDeCodigos = estoque.keySet().iterator();
         int quantidade = 0;
@@ -140,7 +156,6 @@ public class EstoqueDeProdutos {
         System.out.println();
     }
  
-    //Busca preço de produto por código
     public static double precoPorCodigo(String codigo){
         if(estoque.containsKey(codigo)){
             Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
@@ -155,8 +170,7 @@ public class EstoqueDeProdutos {
         return 0.0;
     }
     
-    public static Produto seekProduto(String codigo)
-    {
+    public static Produto seekProduto(String codigo) {
         Produto produto = null;
         if(estoque.containsKey(codigo)){
             Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
@@ -252,5 +266,13 @@ public class EstoqueDeProdutos {
         
         System.out.println("*             Estoque criado com sucesso!           *");
         System.out.println("*****************************************************");
+    }
+    
+    public static void copiarEstoque(){
+        copiaDoEstoque = estoque.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e-> new LinkedList(e.getValue())));
+    }
+    
+    public static void exibirCopiaInicialDoEstoque(){
+        mostrarEstoque(2);
     }
 }

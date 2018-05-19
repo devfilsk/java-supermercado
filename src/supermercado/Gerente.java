@@ -5,11 +5,16 @@
  */
 package supermercado;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import static supermercado.Supermercado.scanner;
 
 /**
  *
@@ -17,17 +22,10 @@ import java.util.stream.Stream;
  */
 public class Gerente extends Funcionario {
     
-    private EstoqueDeProdutos estoqueTemp;
-    
-    
     public Gerente(String nome, String userName, String senha) {
         super(nome, userName, senha);
+        EstoqueDeProdutos.copiarEstoque();
     }
-    
-//    public Gerente(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
-//        super(nome, userName, senha, estoque);
-//        //this.estoqueTemp = EstoqueDeProdutos.clonarEstoque();
-//    }
 
     public void emitirRelatorioDeEstoque() {
         System.out.println("*********************************************************");
@@ -36,12 +34,23 @@ public class Gerente extends Funcionario {
         System.out.println("***** Estoque no INÍCIO do dia *****");
         
         // TODO
-        //estoqueTemp.mostrarEstoque();
+        EstoqueDeProdutos.exibirCopiaInicialDoEstoque();
+
+        //teste de comparacao dos estoques
+        //this.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
+        //this.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
         
         System.out.println("*********************************************************");
         System.out.println("***** Estoque no FINAL do dia *****");
+
+        //teste de comparacao dos estoques
+        //this.removerProduto("20", 8);
+        //this.removerProduto("21", 100);
         
-        EstoqueDeProdutos.mostrarEstoque();
+        EstoqueDeProdutos.mostrarEstoque(1);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Aperte ENTER para continuar ...");
+        scanner.nextLine();
     }
     
     public void emitirRelatorioDeVendas(){}

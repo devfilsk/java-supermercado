@@ -16,10 +16,10 @@ public class Cliente {
         return carrinho;
     }
     
-    
     public void addProdutoPorCodigo(String codigo){
         
     }
+    
     public CarrinhoDeCompras realizarCompra(){
         return this.carrinho;
     }
@@ -27,6 +27,4 @@ public class Cliente {
     public void consultarValor(String codigo){
         Leitor.mostrarValorProduto(codigo);
     }
-    
-    
 }
