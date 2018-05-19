@@ -103,14 +103,14 @@ public class EstoqueDeProdutos {
                 produtosDoCodigo.add(pdtQuilo);
             }
             if (removerDoEstoque) {
-                System.out.println("ATENÇÃO! O estoque desse produto acabou: " + p.getNome()); 
+                Utilitario.ImprimaMensagem("*  ATENÇÃO! O estoque desse produto acabou: " + p.getNome() +"  *"); 
                 estoque.remove(codigo);
             }
             else{
                 estoque.put(codigo, produtosDoCodigo);
             }
         }else{
-            System.out.println("ATENÇÃO! Não existe produto em estoque com o código " + codigo + "."); 
+            Utilitario.ImprimaMensagem("*  ATENÇÃO! Produto com o código " + codigo + " não encontrado  *");
         }
         System.out.println();
     }
@@ -123,7 +123,7 @@ public class EstoqueDeProdutos {
         else if (opcaoDeEstoque == 2) {
             estoqueTemp = getCopiaDoEstoque();
         }
-        System.out.println("***** ESTOQUE DE PRODUTOS *****");
+        Utilitario.ImprimaMensagem("*                    ESTOQUE DE PRODUTOS                        *");
         Iterator listasDeCodigos = estoqueTemp.keySet().iterator();
         int quantidade = 0;
         double quilos = 0;
@@ -179,7 +179,7 @@ public class EstoqueDeProdutos {
                 produto = (Produto) it.next();
                 return produto;
             }else{
-                System.out.println("Produto não encontrado!");
+                Utilitario.ImprimaMensagem("*                   Produto não encontrado!                     *");
             }
         }
         return produto;
@@ -194,17 +194,18 @@ public class EstoqueDeProdutos {
              produtosDoCodigo = estoque.get(codigo);
             return produtosDoCodigo;
         }else{
-            System.out.println("Produto Indisponível");
+            Utilitario.ImprimaMensagem("*                    Produto Indisponível!                      *");
             return null;
         }
     }
     
      private static void exibirEstoqueCliente(){
         Produto p = null;
-        System.out.println("***** PRODUTOS DISPONÍVEIS *****");
+        Utilitario.ImprimaMensagem("*                     PRODUTOS DISPONÍVEIS                      *");
         Iterator listasDeCodigos = EstoqueDeProdutos.estoque.keySet().iterator();
         int quantidade = 0;
         double quilos = 0;
+        
         while (listasDeCodigos.hasNext()) {
             String codigo = (String)listasDeCodigos.next();
             Iterator produtos = estoque.get(codigo).iterator();
@@ -218,6 +219,7 @@ public class EstoqueDeProdutos {
                     System.out.println("Produto: " + p.getNome());
                     mostrarNomeProduto = false;
                 }
+                
                 if (p instanceof ProdutoQuilo) {
                     ProdutoQuilo pdt = (ProdutoQuilo)p;
                     System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
@@ -229,8 +231,10 @@ public class EstoqueDeProdutos {
             if (p instanceof ProdutoUnitario) {
                 System.out.println("Quantidade em estoque = " +quantidade + "\n");
             }
+            
             quantidade = 0;
         }
+        
         System.out.println();
     }
      
@@ -248,30 +252,35 @@ public class EstoqueDeProdutos {
 //        return estoqueClone;
     //}
     
+     
+     // Método responsável por criar o estoque inicial de produtos. Alimentar o sistema.
     public void Feed(){
-        System.out.println("*****************************************************");
-        System.out.println("*       Carga inicial do estoque de produtos        *");
-        
+        System.out.println("*****************************************************************");
+        System.out.println("*              Carga inicial do estoque de produtos             *");
+        System.out.println("*                            Aguarde...                         *");
         ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
-        this.adicionarProduto(leite, 2.0);
+        adicionarProduto(leite, 2.0);
         
         ProdutoUnitario arroz = new ProdutoUnitario("20", "Arroz", 11.95);
-        this.adicionarProduto(arroz, 6.0);
+        adicionarProduto(arroz, 6.0);
         
         ProdutoUnitario feijao = new ProdutoUnitario("30", "Feijão", 4.99);
-        this.adicionarProduto(feijao, 8.0);
+        adicionarProduto(feijao, 8.0);
         
         ProdutoQuilo melancia = new ProdutoQuilo("11", "Tomate", 3.50, 100);
-        this.adicionarProduto(melancia, 0);
+        adicionarProduto(melancia, 0);
         
-        System.out.println("*             Estoque criado com sucesso!           *");
-        System.out.println("*****************************************************");
+        System.out.println("*                  Estoque criado com sucesso!                  *");
+        System.out.println("*****************************************************************");
     }
     
+    // Método responsável por criar uma cópia do estoque de produtos para que o gerente 
+    // possa emitir o relatório de estoque inicial x estoque final
     public static void copiarEstoque(){
         copiaDoEstoque = estoque.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e-> new LinkedList(e.getValue())));
     }
     
+    // Método responsável por chamar a exibição do estoque inicial.
     public static void exibirCopiaInicialDoEstoque(){
         mostrarEstoque(2);
     }

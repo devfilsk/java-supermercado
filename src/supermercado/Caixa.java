@@ -23,6 +23,14 @@ public class Caixa {
         this.numeroDoCaixa = numero;
         this.balanca = new Balanca();
     }    
+
+    public ArrayList<Venda> getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(ArrayList<Venda> vendas) {
+        this.vendas = vendas;
+    }
     
     public int getNumeroDoCaixa() {
         return numeroDoCaixa;
@@ -43,7 +51,6 @@ public class Caixa {
     public void cancelarVenda(){
         
     }
-    
 
     private double calcularValorPorItem(double valorDaUnidadeProduto, int quantidade){
         return balanca.calcularValorPorItem(valorDaUnidadeProduto, quantidade);
@@ -60,10 +67,9 @@ public class Caixa {
     
     public void iniciarVenda(Cliente cliente){
         Venda venda = new Venda(this, cliente);
-        venda.vender();
-        
         System.out.println("VENDA INICIADA");
-        
+        venda.vender();
+        vendas.add(venda);
     }
     
     

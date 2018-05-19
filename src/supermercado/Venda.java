@@ -13,13 +13,17 @@ public class Venda {
     private EnumTipoDePagamento formaDePAgamento;
     private double valorVenda;
     
-    public Venda(){
-        
-    }
-    
     public Venda(Caixa caixa, Cliente cliente){
         this.cliente = cliente;
         this.caixa = caixa;
+    }
+
+    public EnumTipoDePagamento getFormaDePAgamento() {
+        return formaDePAgamento;
+    }
+
+    public void setFormaDePAgamento(EnumTipoDePagamento formaDePAgamento) {
+        this.formaDePAgamento = formaDePAgamento;
     }
     
     public double getValorVenda(){
@@ -29,6 +33,7 @@ public class Venda {
     public void vender(){
         this.valorVenda = cliente.getCarrinho().calcularPrecoCarrinho();        
     }
+    
     public void formaDePagamento(){
         Scanner scan = new Scanner(System.in);
         System.out.println("***********************************************************");

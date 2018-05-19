@@ -5,6 +5,7 @@
  */
 package supermercado;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,25 +29,11 @@ public class Gerente extends Funcionario {
     }
 
     public void emitirRelatorioDeEstoque() {
-        System.out.println("*********************************************************");
-        System.out.println("RELATÓRIO DE ESTOQUE");
-        System.out.println("*********************************************************");
-        System.out.println("***** Estoque no INÍCIO do dia *****");
-        
-        // TODO
+        Utilitario.ImprimaMensagem("*                     RELATÓRIO DE ESTOQUE                      *", 
+                "*                    Estoque no INÍCIO do dia                   *");
         EstoqueDeProdutos.exibirCopiaInicialDoEstoque();
 
-        //teste de comparacao dos estoques
-        //this.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 53.8), 0);
-        //this.adicionarProduto(new ProdutoQuilo("21", "Maça", 1.99, 16.2), 0);
-        
-        System.out.println("*********************************************************");
-        System.out.println("***** Estoque no FINAL do dia *****");
-
-        //teste de comparacao dos estoques
-        //this.removerProduto("20", 8);
-        //this.removerProduto("21", 100);
-        
+        Utilitario.ImprimaMensagem("*                  Estoque no FINAL do dia                      *");
         EstoqueDeProdutos.mostrarEstoque(1);
         
         Scanner sc = new Scanner(System.in);
@@ -54,5 +41,24 @@ public class Gerente extends Funcionario {
         scanner.nextLine();
     }
     
-    public void emitirRelatorioDeVendas(){}
+    public void emitirRelatorioDeVendas(List<Caixa> caixas){
+        Iterator i = caixas.iterator();
+        
+        // acessa caixa por caixa
+        while (i.hasNext()) { 
+            Caixa caixa = (Caixa)i.next();
+            Iterator itVendas = caixa.getVendas().iterator();
+            // acessa vendas do caixa
+            while (itVendas.hasNext()) {
+                Venda venda = (Venda)itVendas.next();
+                
+                // listar produtos vendidos
+                // listar forma de pagamento
+                // listar valor total
+                // listar troco se houver
+            }
+                    
+        }
+        
+    }
 }
