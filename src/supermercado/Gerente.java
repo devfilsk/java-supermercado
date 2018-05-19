@@ -48,6 +48,7 @@ public class Gerente extends Funcionario {
         //this.removerProduto("21", 100);
         
         EstoqueDeProdutos.mostrarEstoque(1);
+        
         Scanner sc = new Scanner(System.in);
         System.out.println("Aperte ENTER para continuar ...");
         scanner.nextLine();

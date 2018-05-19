@@ -49,7 +49,7 @@ public class EstoqueDeProdutos {
             }
             else if (produto instanceof ProdutoQuilo) {
                 ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
-                pdt.setQtdQuilos(pdt.getQtdQuilos() + quantidade);
+                pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
                 produtosDoCodigo = new LinkedList<Produto>();
                 produtosDoCodigo.add(pdt);
             }
@@ -116,7 +116,7 @@ public class EstoqueDeProdutos {
     }
     
     public static void mostrarEstoque(int opcaoDeEstoque){
-        Map<String, List<Produto>> estoqueTemp;
+        Map<String, List<Produto>> estoqueTemp = null;
         if (opcaoDeEstoque == 1) {
             estoqueTemp = estoque;
         }
@@ -124,12 +124,12 @@ public class EstoqueDeProdutos {
             estoqueTemp = getCopiaDoEstoque();
         }
         System.out.println("***** ESTOQUE DE PRODUTOS *****");
-        Iterator listasDeCodigos = estoque.keySet().iterator();
+        Iterator listasDeCodigos = estoqueTemp.keySet().iterator();
         int quantidade = 0;
         double quilos = 0;
         while (listasDeCodigos.hasNext()) {
             String codigo = (String)listasDeCodigos.next();
-            Iterator produtos = estoque.get(codigo).iterator();
+            Iterator produtos = estoqueTemp.get(codigo).iterator();
             boolean mostrarNomeProduto = true;
            
             while (produtos.hasNext()) {
