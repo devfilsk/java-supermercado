@@ -98,13 +98,13 @@ public class CarrinhoDeCompras{
                     ProdutoQuilo pdt = (ProdutoQuilo)p;
                     System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
                 }
-
+                if (p instanceof ProdutoUnitario) {
+                    System.out.println("Quantidade no carrinho = " + quantidade + "\n");
+                }
                 quantidade++;
             }
             
-            if (p instanceof ProdutoUnitario) {
-                System.out.println("Quantidade no carrinho = " +  + "\n");
-            }
+           
             quantidade = 0;
         }
         System.out.println();

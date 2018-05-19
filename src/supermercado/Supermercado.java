@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -97,8 +98,6 @@ public class Supermercado{
                     do{
                         MostrarMenuListaDeCaixas(caixas);
                         String opCaixa = scanner.next();
-                        sairMenuOperador = true;
-                        
                         switch(opCaixa){
                             case "1":
                                 Caixa c1 = caixas.get(0);
@@ -119,7 +118,7 @@ public class Supermercado{
                                                 System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
                                             }
                                         }else{
-                                            System.out.println("Senha incorreta.");
+                                            System.out.println("****    Atenção!    ****\nSenha incorreta.");
                                             tentativas++;
                                         }
                                     }while(tentativas < chances && !acessouCaixa);
@@ -147,7 +146,7 @@ public class Supermercado{
                                                 System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
                                             }
                                         }else{
-                                            System.out.println("Senha incorreta.");
+                                            System.out.println("****    Atenção!    ****\nSenha incorreta.");
                                             tentativas++;
                                         }
                                     }while(tentativas < chances && !acessouCaixa);
@@ -175,7 +174,7 @@ public class Supermercado{
                                                 System.out.println("****    Atenção!    ****\nOperador já " + f.getNome() + " está logado em outro caixa.");
                                             }
                                         }else{
-                                            System.out.println("Senha incorreta.");
+                                            System.out.println("****    Atenção!    ****\nSenha incorreta.");
                                             tentativas++;
                                         }
                                     }while(tentativas < chances && !acessouCaixa);
@@ -194,8 +193,59 @@ public class Supermercado{
                     scanner.nextLine();
                     break;
                 case "3":
+                    Boolean sairMenuCliente = false;
                     System.out.println("**************** Bem vindo, caro cliente! ****************");
-                    Comprar();
+                    System.out.println("*********** HOJE É UM ÓTIMO DIA PARA COMPRAS! ************");
+                    Cliente cliente = new Cliente();
+                    do{
+                        Boolean sairMenuEscolhaDeCaixas = false;
+                        System.out.println("****************************************");
+                        System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar Preço \n ( 0 ) Sair");
+                        String opcaoCliente = scanner.next();
+                        switch (opcaoCliente){
+                            case "1":
+                                // TODO atribuir os produtos escolhidos ao carrinho do cliente
+                                EscolherProduto();
+                                sairMenuCliente = true;
+                                break;
+                            case "2":
+                                // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
+                                if (true){
+                                    int opcaoCaixaCompra;
+                                    List<Caixa> caixasDisponiveis = ObtenhaCaixasDisponiveis();
+                                    System.out.println("*********** CAIXAS ************");
+                                    do{
+                                        System.out.println("****  Selecione um caixa  ****");
+                                        MostrarCaixasEmFuncionamento();
+                                        opcaoCaixaCompra = scanner.nextInt();
+                                        if (opcaoCaixaCompra > 0 && opcaoCaixaCompra <= caixasDisponiveis.size()) {
+                                            Caixa caixaSelecionado = caixasDisponiveis.get(Integer.valueOf(opcaoCaixaCompra)-1);
+                                            
+                                            //caixaSelecionado.iniciarVenda(Cliente);
+                                            
+                                            sairMenuCliente = true;
+                                            opcaoCaixaCompra = 0;
+                                            System.out.println("Obrigado por comprar conosco! Volte sempre!");
+                                        }
+                                    }while(opcaoCaixaCompra != 0);
+                                } else {
+                                    System.out.println("Seu carrinho de compras está vazio. Escolha alguns produtos.");
+                                    sairMenuEscolhaDeCaixas = true;
+                                }
+                                break;
+                            case "3":
+                                System.out.println("****    Informe o código do produto    ****");
+                                String codigo = scanner.next();
+                                Leitor.mostrarValorProduto(codigo);
+                                break;
+                            case "0": 
+                                sairMenuCliente = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }while(!sairMenuCliente);
+                    scanner.nextLine();
                     break;
                 case "0":
                     sairMenu = true;
@@ -264,40 +314,60 @@ public class Supermercado{
     
     private static void MostrarMenuGerente(){
         System.out.println("*****************************************************************");
-        System.out.println("   1- Adicionar produto no estoque \n   2- Emitir relatório de estoque \n   3- Emitir relatório de vendas \n   0- Logout ");
+        System.out.println(" ( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout ");
         System.out.println("*****************************************************************");
         System.out.println();
     }
     
     private static void MostrarMenuListaDeCaixas(List<Caixa> caixas){
-        System.out.println("*****************************************************************");
-        
-        System.out.println("    CAIXAS   ");
+        System.out.println("*****************************************");
+        System.out.println("**************** CAIXAS *****************");
         Iterator i = caixas.iterator();
         int op = 1;
         while (i.hasNext()) {
             Caixa caixa = (Caixa)i.next();
             if (caixa.getOperadorCaixa() ==  null) { // se não tiver operador setado
-                System.out.print("  " + op + "- " + caixa +"\n");
+                System.out.print(" ( " + op + " ) " + caixa +"\n");
             }
             else{
-                System.out.print("  " + op + "- Logout " + caixa +" ("+caixa.getOperadorCaixa().getNome()+")\n");
+                System.out.print(" ( " + op + " ) Logout " + caixa +" ("+caixa.getOperadorCaixa().getNome()+")\n");
             }    
             op++;
         }
-        System.out.println("  0- Sair");
-        System.out.println("*****************************************************************");
+        System.out.println(" ( 0 ) Sair");
+        System.out.println("*****************************************");
     }
     
     private static Caixa FuncionarioLogado(String senha){
         return (Caixa)caixas.stream().filter(c->c.getOperadorCaixa() != null && c.getOperadorCaixa().getSenha().equals(senha)).findFirst().orElse(null);
     }
+    
+    private static List<Caixa> ObtenhaCaixasDisponiveis(){
+        return caixas.stream().filter(c->c.getOperadorCaixa() != null).collect(Collectors.toList());
+    }
+    
+    private static void MostrarCaixasEmFuncionamento(){
+        if (ObtenhaCaixasDisponiveis().isEmpty()) {
+            System.out.println("Nenhum caixa está atendendo no momento. =(");
+        }
+        else {
+            Iterator i = ObtenhaCaixasDisponiveis().iterator();
+            int op = 1;
+            while (i.hasNext()) {
+                Caixa caixa = (Caixa)i.next();
+                System.out.print(" ( " + op + " ) " + caixa +"\n");
+                op++;
+            }
+            System.out.println(" ( 0 ) Sair");
+        }
+    }
+    
     //ações de comprar vários produtos no mercado
-    private static void Comprar(){
+    private static void EscolherProduto(){
         System.out.println("**************** OPERAÇÕES DE COMPRA ****************");
         System.out.println(" ( 1 ) PARA COMPRAR \n ( 0 ) PARA OUTRA OPERAÇÃO ");
         String comp = scanner.nextLine();
-        EstoqueDeProdutos.mostrarEstoque();
+        EstoqueDeProdutos.mostrarEstoque(1);
         switch(comp){
             case "1":
                 //Cria um cliente e atibui um carrinho a ele
@@ -318,9 +388,8 @@ public class Supermercado{
                         Produto prod = (Produto) produtos.get(0);
                         System.out.println("***** DIGITE A QUANTIDADE DE "+prod.getNome().toUpperCase()+"  *****");
                         quantidade = Integer.parseInt(scanner.nextLine());
-                        
+                        //TODO: VERIFICAR SE EXISTE A QUANTIDADE DE PESO DISPONIVEL EM ESTOQUE.
                          cli.getCarrinho().addProduto(prod, quantidade);
-                        
                          cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + prod.calcularValor(quantidade));
                         //se for produto por kilo, não insere mais de um no carrinho
                     }else if(produtos != null && String.valueOf(codigo.charAt(codigo.length()-1)).equals(String.valueOf(1))){
@@ -331,6 +400,7 @@ public class Supermercado{
                             Produto p = (Produto) it.next();
                              System.out.println("***** QUANTIDADE DE "+p.getNome().toUpperCase()+" EM KILOS *****");
                             quantidade = Integer.parseInt(scanner.nextLine());
+                            //TODO: VERIFICAR SE EXISTE A QUANTIDADE DE PESO DISPONIVEL EM ESTOQUE.
                             cli.getCarrinho().addProduto(p, quantidade);
                             cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + p.calcularValor(quantidade));
                         }

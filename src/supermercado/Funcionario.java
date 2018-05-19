@@ -74,6 +74,6 @@ public class Funcionario implements IOperacoesDoEstoque{
 
     @Override
     public void mostrarEstoque() {
-        EstoqueDeProdutos.mostrarEstoque();
+        EstoqueDeProdutos.mostrarEstoque(1);
     }
 }
