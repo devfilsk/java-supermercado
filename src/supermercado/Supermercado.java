@@ -314,28 +314,28 @@ public class Supermercado{
     
     private static void MostrarMenuGerente(){
         System.out.println("*****************************************************************");
-        System.out.println("   1- Adicionar produto no estoque \n   2- Emitir relatório de estoque \n   3- Emitir relatório de vendas \n   0- Logout ");
+        System.out.println(" ( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout ");
         System.out.println("*****************************************************************");
         System.out.println();
     }
     
     private static void MostrarMenuListaDeCaixas(List<Caixa> caixas){
-        System.out.println("*****************************************************************");
-        System.out.println("    CAIXAS   ");
+        System.out.println("*****************************************");
+        System.out.println("**************** CAIXAS *****************");
         Iterator i = caixas.iterator();
         int op = 1;
         while (i.hasNext()) {
             Caixa caixa = (Caixa)i.next();
             if (caixa.getOperadorCaixa() ==  null) { // se não tiver operador setado
-                System.out.print("  " + op + "- " + caixa +"\n");
+                System.out.print(" ( " + op + " ) " + caixa +"\n");
             }
             else{
-                System.out.print("  " + op + "- Logout " + caixa +" ("+caixa.getOperadorCaixa().getNome()+")\n");
+                System.out.print(" ( " + op + " ) Logout " + caixa +" ("+caixa.getOperadorCaixa().getNome()+")\n");
             }    
             op++;
         }
-        System.out.println("  0- Sair");
-        System.out.println("*****************************************************************");
+        System.out.println(" ( 0 ) Sair");
+        System.out.println("*****************************************");
     }
     
     private static Caixa FuncionarioLogado(String senha){
@@ -355,10 +355,10 @@ public class Supermercado{
             int op = 1;
             while (i.hasNext()) {
                 Caixa caixa = (Caixa)i.next();
-                System.out.print("  " + op + "- " + caixa +"\n");
+                System.out.print(" ( " + op + " ) " + caixa +"\n");
                 op++;
             }
-            System.out.println("  0- Sair");
+            System.out.println(" ( 0 ) Sair");
         }
     }
     
