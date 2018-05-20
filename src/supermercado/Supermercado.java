@@ -36,98 +36,27 @@ public class Supermercado{
         
         Gerente gerente = (Gerente)funcionarios.get(0);
         
-        String opcao = "";
         Boolean sairMenu = false;
         do{
             int chances = 3;
             int tentativas = 0;
             Utilitario.ImprimaMensagem("*                            ACESSO                             *");
             System.out.println(" ( 1 ) Gerente \n ( 2 ) Funcionário \n ( 3 ) Cliente \n ( 0 ) Sair do sistema");
-            opcao = scanner.nextLine();
+            int opcao = scanner.nextInt();
         
             switch(opcao){
-                case "1":
-                    Utilitario.ImprimaMensagem("*                             LOGIN                             *");
-                    Boolean acessou = false;
-                    
-                    do{
-                        System.out.println("Senha: ");
-                        String senha = scanner.next();
-                        
-                        if (gerente.getSenha().equals(senha)) {
-                            acessou = true;
-                            Utilitario.ImprimaMensagem("              Bem vindo, " + gerente.getNome() + "!              ");
-                            String opcaoFunGer = "";
-                            Boolean sairMenuGer = false;
-                            
-                            do{
-                                MostrarMenuGerente();
-                                opcaoFunGer = scanner.next();
-                                
-                                switch(opcaoFunGer){
-                                    case "1": // adicionar produto
-                                        Boolean sairMenuProduto = false;
-                                        
-                                        do{
-                                            Utilitario.ImprimaMensagem("*    Qual o tipo do produto que deseja adicionar ao estoque?    *");
-                                            System.out.println(" ( 1 ) Produto unidade \n ( 2 ) Produto quilo \n ( 0 ) Sair");
-                                            String tipoProduto  = scanner.next();
-                                            
-                                            switch (tipoProduto){
-                                                case "1":
-                                                    WizardAddProdutoUnidade(gerente);
-                                                    break;
-                                                case "2":
-                                                    WizardAddProdutoQuilo(gerente);
-                                                    break;
-                                                case"0":
-                                                    sairMenuProduto = true;
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                        }while(!sairMenuProduto);
-                                        
-                                        break;
-                                    case "2": // emitir relatorio estoque
-                                        gerente.emitirRelatorioDeEstoque();
-                                        break;
-                                    case "3": // emitir relatorio vendas
-                                        gerente.emitirRelatorioDeVendas(caixas);
-                                        // TODO
-                                        System.out.println("emitindo vendas...");
-                                        break;
-                                    case "0":
-                                        sairMenuGer = true;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                scanner.nextLine();
-                            }while(!sairMenuGer);
-                            
-                        }
-                        else{
-                            System.out.println("Senha incorreta.");
-                            tentativas++;
-                        }
-                    }while(tentativas < chances && !acessou);
-                    
-                    if (tentativas >= chances && !acessou) {  
-                        System.out.println("As tentativas de login acabaram.\nSaindo...");
-                        scanner.nextLine();
-                    }  
-                    
+                case 1: // Gerente
+                    ControleMenuGerente(gerente, tentativas, chances);
                     break;
-                case "2":
+                case 2: // Funcionário (operador)
                     Boolean sairMenuOperador = false;
                     
                     do{
                         MostrarMenuListaDeCaixas(caixas);
-                        String opCaixa = scanner.next();
+                        int opCaixa = scanner.nextInt();
                         
                         switch(opCaixa){
-                            case "1":
+                            case 1:
                                 Caixa c1 = caixas.get(0);
                                 if (c1.getOperadorCaixa() == null) {
                                     Boolean acessouCaixa = false;
@@ -162,7 +91,7 @@ public class Supermercado{
                                 }
                                 
                                 break;
-                            case "2":
+                            case 2:
                                 Caixa c2 = caixas.get(1);
                                 
                                 if (c2.getOperadorCaixa() == null) {
@@ -197,7 +126,7 @@ public class Supermercado{
                                 }
                                 
                                 break;
-                            case "3":
+                            case 3:
                                 Caixa c3 = caixas.get(2);
                                 
                                 if (c3.getOperadorCaixa() == null) {
@@ -230,7 +159,7 @@ public class Supermercado{
                                     c3.setOperadorCaixa(null);
                                 }
                                 break;
-                            case "0":
+                            case 0:
                                 sairMenuOperador = true;
                                 break;
                             default:
@@ -240,24 +169,24 @@ public class Supermercado{
                     
                     scanner.nextLine();
                     break;
-                case "3":
+                case 3: // cliente
                     Boolean sairMenuCliente = false;
                     Utilitario.ImprimaMensagem("*                    Bem vindo, caro cliente!                   *",
-                                        "*               HOJE É UM ÓTIMO DIA PARA COMPRAS!               *");
+                                               "*               HOJE É UM ÓTIMO DIA PARA COMPRAS!               *");
                     Cliente cliente = new Cliente();
                    
                     do{
                         Boolean sairMenuEscolhaDeCaixas = false;
                         System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar Preço \n ( 0 ) Sair");
-                        String opcaoCliente = scanner.next();
+                        int opcaoCliente = scanner.nextInt();
                         
                         switch (opcaoCliente){
-                            case "1":
+                            case 1:
                                 // TODO atribuir os produtos escolhidos ao carrinho do cliente
                                 EscolherProduto();
                                 sairMenuCliente = true;
                                 break;
-                            case "2":
+                            case 2:
                                 // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
                                 if (true){
                                     int opcaoCaixaCompra;
@@ -283,12 +212,12 @@ public class Supermercado{
                                     sairMenuEscolhaDeCaixas = true;
                                 }
                                 break;
-                            case "3":
+                            case 3:
                                 Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
                                 String codigo = scanner.next();
                                 Leitor.mostrarValorProduto(codigo);
                                 break;
-                            case "0": 
+                            case 0: 
                                 sairMenuCliente = true;
                                 break;
                             default:
@@ -298,7 +227,7 @@ public class Supermercado{
                     
                     scanner.nextLine();
                     break;
-                case "0":
+                case 0:
                     sairMenu = true;
                     break;
                 default:
@@ -319,10 +248,11 @@ public class Supermercado{
     private static void Feed() {
         listaDeProdutos.Feed();
         System.out.println();
-//        System.out.println("Aperte ENTER para continuar ...");
-//        scanner.nextLine();
+        System.out.println("Aperte ENTER para continuar ...");
+        scanner.nextLine();
     }
     
+    // Método responsável por criar os funcionários do sistema.
     private static void CriarFuncionarios(){
         Gerente gerente = new Gerente("GERENTE DO MERCADO", "admin", "admin" );
         OperadorDeCaixa funcionario1 = new OperadorDeCaixa("Manoelzinho", "f1", "1111" );
@@ -348,13 +278,96 @@ public class Supermercado{
         caixas.add(c3); //[2]
     }
     
+    // Método responsável por controlar o menu Gerente
+    private static void ControleMenuGerente(Gerente gerente, int tentativas, int chances) {
+        Utilitario.ImprimaMensagem("*                             LOGIN                             *");
+        Boolean acessou = false;
+        
+        do{
+            System.out.println("Senha: ");
+            String senha = scanner.next();
+            
+            if (gerente.getSenha().equals(senha)) {
+                acessou = true;
+                
+                Utilitario.ImprimaMensagem("              Bem vindo, " + gerente.getNome() + "!              ");
+                MenuGerente(gerente);
+            }
+            else{
+                System.out.println("Senha incorreta.");
+                tentativas++;
+            }
+        }while(tentativas < chances && !acessou);
+        
+        if (tentativas >= chances && !acessou) {
+            System.out.println("As tentativas de login acabaram.\nSaindo...");
+            scanner.nextLine();
+        }
+    }
+    
+    // Método com as opcoes do menu do gerente
+    private static void MenuGerente(Gerente gerente) {
+        Boolean sairMenuGer = false;
+        do{
+            MostrarMenuGerente();
+            int opcaoFunGer = scanner.nextInt();
+            
+            switch(opcaoFunGer){
+                case 1:
+                    MenuGerenteAdicionarProduto(gerente);
+                    break;
+                case 2: // emitir relatorio estoque
+                    gerente.emitirRelatorioDeEstoque();
+                    break;
+                case 3: // emitir relatorio vendas
+                    gerente.emitirRelatorioDeVendas(caixas);
+                    // TODO
+                    System.out.println("emitindo vendas...");
+                    break;
+                case 0:
+                    sairMenuGer = true;
+                    break;
+                default:
+                    break;
+            }
+            scanner.nextLine();
+        }while(!sairMenuGer);
+    }
+    
+    // Método responsável por mostrar o menu do gerente.
     private static void MostrarMenuGerente(){
-        System.out.println("*****************************************************************");
+        Utilitario.ImprimaMensagem("*                      Menu de Gerente                          *");
         System.out.println(" ( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout ");
-        System.out.println("*****************************************************************");
         System.out.println();
     }
     
+    // Método responsável por mostrar o menu para o gerente adicionar o produto.
+    private static void MenuGerenteAdicionarProduto(Gerente gerente) {
+        // adicionar produto
+        Boolean sairMenuProduto = false;
+        
+        do{
+            Utilitario.ImprimaMensagem("*    Qual o tipo do produto que deseja adicionar ao estoque?    *");
+            System.out.println(" ( 1 ) Produto unidade \n ( 2 ) Produto quilo \n ( 0 ) Sair");
+            int tipoProduto  = scanner.nextInt();
+            
+            switch (tipoProduto){
+                case 1:
+                    WizardAddProdutoUnidade(gerente);
+                    break;
+                case 2:
+                    WizardAddProdutoQuilo(gerente);
+                    break;
+                case 0:
+                    sairMenuProduto = true;
+                    break;
+                default:
+                    break;
+            }
+        }while(!sairMenuProduto);
+    }
+    
+    // Método responsável por mostrar a escolha dos caixas.
     private static void MostrarMenuListaDeCaixas(List<Caixa> caixas){
         Utilitario.ImprimaMensagem("*                           CAIXAS                              *");
         Iterator i = caixas.iterator();
@@ -373,14 +386,17 @@ public class Supermercado{
         System.out.println("*****************************************************************");
     }
     
+    // Método repsonsável por identificar se existe usuário logado em algum dos caixas.
     private static Caixa FuncionarioLogado(String senha){
         return (Caixa)caixas.stream().filter(c->c.getOperadorCaixa() != null && c.getOperadorCaixa().getSenha().equals(senha)).findFirst().orElse(null);
     }
     
+    // Método responsável por obter a lista de caixas disponíveis.
     private static List<Caixa> ObtenhaCaixasDisponiveis(){
         return caixas.stream().filter(c->c.getOperadorCaixa() != null).collect(Collectors.toList());
     }
     
+    // Método responsável por mostrar caixas com operadores logados.
     private static void MostrarCaixasEmFuncionamento(){
         if (ObtenhaCaixasDisponiveis().isEmpty()) {
             System.out.println("Nenhum caixa está atendendo no momento. =(");
@@ -397,7 +413,7 @@ public class Supermercado{
         }
     }
     
-    //ações de comprar vários produtos no mercado
+    // Ações de comprar vários produtos no mercado.
     private static void EscolherProduto(){
         System.out.println("**************** OPERAÇÕES DE COMPRA ****************");
         System.out.println(" ( 1 ) PARA COMPRAR \n ( 0 ) PARA OUTRA OPERAÇÃO ");
@@ -464,6 +480,7 @@ public class Supermercado{
         
     }
    
+    // Método responsável por apresentar o menu de cadastro de produtos por unidade.
     private static void WizardAddProdutoUnidade(Gerente gerente) {
         Utilitario.ImprimaMensagem("*                    ADICIONANDO PRODUTO                        *");
         System.out.println("Código do produto:");
@@ -480,6 +497,7 @@ public class Supermercado{
         gerente.adicionarProduto(produto, quantidadeProduto);
     }
     
+    // Método responsável por apresentar o menu de cadastro de produtos por quilo.
     private static void WizardAddProdutoQuilo(Gerente gerente) {
         Utilitario.ImprimaMensagem("*                    ADICIONANDO PRODUTO                        *");
         System.out.println("Código do produto:");
@@ -490,7 +508,7 @@ public class Supermercado{
         System.out.println("Preço do quilo de " + nomeProduto + " (exemplo: 99,99):");
         double precoProduto  = scanner.nextDouble();
         System.out.println("Quilos de " + nomeProduto + ":");
-        int quantidadeProduto  = scanner.nextInt();
+        double quantidadeProduto  = scanner.nextDouble();
         ProdutoQuilo produto = new ProdutoQuilo(codigoProduto + "0", nomeProduto, precoProduto, quantidadeProduto);
         System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
         gerente.adicionarProduto(produto, 0);
