@@ -41,20 +41,27 @@ public class EstoqueDeProdutos {
         if(estoque.containsKey(codigo)){
             produtosDoCodigo = estoque.get(codigo);
             
-            if (produto instanceof ProdutoUnitario) {
-                while (quantidade > 0) {                
-                    produtosDoCodigo.add(produto);
-                    quantidade--;
+            if (produtosDoCodigo.get(0).getNome().equals(produto.getNome())) {
+                if (produto instanceof ProdutoUnitario) {
+                    while (quantidade > 0) {                
+                        produtosDoCodigo.add(produto);
+                        quantidade--;
+                    }
                 }
+                else if (produto instanceof ProdutoQuilo) {
+                    ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
+                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
+                    produtosDoCodigo = new LinkedList<Produto>();
+                    produtosDoCodigo.add(pdt);
+                }
+
+                estoque.put(codigo, produtosDoCodigo);
             }
-            else if (produto instanceof ProdutoQuilo) {
-                ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
-                pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
-                produtosDoCodigo = new LinkedList<Produto>();
-                produtosDoCodigo.add(pdt);
+            else{
+                System.out.println("ATENÇÃO\tATENÇÃO\tATENÇÃO\tATENÇÃO\tATENÇÃO");
+                System.out.println("Produto NÃO foi adicionado pois o codigo '" + produto.getCodigo() + "' possui apenas produtos '"
+                +produtosDoCodigo.get(0).getNome() + "' e voce esta tentando adicionar '" + produto.getNome() + "'");
             }
-            
-            estoque.put(codigo, produtosDoCodigo);
         }else{
             produtosDoCodigo = new LinkedList<Produto>();
             
