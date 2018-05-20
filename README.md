@@ -22,6 +22,9 @@ Sistema de gerenciamento Vendas de Supemercado, desenvolvido como projeto final 
 
 - Clientes podem escolher produtos disponíveis para comprar
 
+## Uso
+![Recordit GIF](http://g.recordit.co/hsENae0SS5.gif)
+
 ## Instalação
 ### Clone
 - Clone esse repositório para sua máquina local usando `https://github.com/richielybmp/Supermercado.git`
