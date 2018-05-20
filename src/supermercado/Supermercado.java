@@ -22,11 +22,11 @@ public class Supermercado{
     /**
      * @param args the command line arguments
      */
-    static EstoqueDeProdutos listaDeProdutos = new EstoqueDeProdutos();
-    static Scanner scanner = new Scanner(System.in);
-    static List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-    static List<Caixa> caixas = new ArrayList<Caixa>();
-    static List<String> senhas = new ArrayList<String>()
+    //static EstoqueDeProdutos listaDeProdutos = new EstoqueDeProdutos();
+    private static Scanner scanner = new Scanner(System.in);
+    private static List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+    private static List<Caixa> caixas = new ArrayList<Caixa>();
+    private static List<String> senhas = new ArrayList<String>()
     {{ add("1111"); add("1122"); add("1133"); add("1144"); add("1155"); }};
     
     public static void main(String[] args) {
@@ -246,7 +246,7 @@ public class Supermercado{
 
     // Método responsável por realizar a carga iniicial do estoque de produtos.
     private static void Feed() {
-        listaDeProdutos.Feed();
+        EstoqueDeProdutos.Feed();
         System.out.println();
         System.out.println("Aperte ENTER para continuar ...");
         scanner.nextLine();

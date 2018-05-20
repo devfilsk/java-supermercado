@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
  */
 public class EstoqueDeProdutos {
     // key = codigo do produto , value = lista com a quantidade do mesmo produto em estoque
-    public static Map<String, List<Produto>> estoque;
+    public static Map<String, List<Produto>> estoque = new LinkedHashMap<String, List<Produto>>();;
     private static Map<String, List<Produto>> copiaDoEstoque;
     private static Produto p;
     
-    public EstoqueDeProdutos() {
-        estoque = new LinkedHashMap<String, List<Produto>>();
-    }
+//    public EstoqueDeProdutos() {
+//        //estoque = 
+//    }
 
     private static Map<String, List<Produto>> getCopiaDoEstoque() {
         return copiaDoEstoque;
@@ -261,7 +261,7 @@ public class EstoqueDeProdutos {
     
      
      // Método responsável por criar o estoque inicial de produtos. Alimentar o sistema.
-    public void Feed(){
+    public static void Feed(){
         System.out.println("*****************************************************************");
         System.out.println("*              Carga inicial do estoque de produtos             *");
         System.out.println("*                            Aguarde...                         *");

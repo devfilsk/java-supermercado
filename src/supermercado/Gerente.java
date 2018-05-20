@@ -15,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import static supermercado.Supermercado.scanner;
-
 /**
  *
  * @author Richiely Batista
@@ -29,6 +27,7 @@ public class Gerente extends Funcionario {
     }
 
     public void emitirRelatorioDeEstoque() {
+        Scanner scanner = new Scanner(System.in);
         Utilitario.ImprimaMensagem("*                     RELATÓRIO DE ESTOQUE                      *", 
                 "*                    Estoque no INÍCIO do dia                   *");
         EstoqueDeProdutos.exibirCopiaInicialDoEstoque();
