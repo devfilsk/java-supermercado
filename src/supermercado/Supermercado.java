@@ -513,4 +513,5 @@ public class Supermercado{
         System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
         gerente.adicionarProduto(produto, 0);
     }
+    
 }
