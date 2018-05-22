@@ -213,7 +213,7 @@ public class Supermercado{
                             case 3:
                                 Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
                                 String codigo = scanner.next();
-                                Leitor.mostrarValorProduto(codigo);
+                                cliente.consultarValor(codigo);
                                 break;
                             case 0: 
                                 sairMenuCliente = true;
