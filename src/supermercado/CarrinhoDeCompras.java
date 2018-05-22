@@ -85,7 +85,7 @@ public class CarrinhoDeCompras{
             String codigo = (String)it.next();
             Iterator produtos = produtosCarrinho.get(codigo).iterator();
             boolean mostrarNomeProduto = true;
-            ProdutoUnitario prodUnidade = (ProdutoUnitario) produtosCarrinho.get(codigo);
+            List prodUnidade = (List) produtosCarrinho.get(codigo);
             while (produtos.hasNext()) {
                 p = (Produto)produtos.next();
                 

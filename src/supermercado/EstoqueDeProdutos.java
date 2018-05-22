@@ -198,7 +198,7 @@ public class EstoqueDeProdutos {
         List<Produto> produtosDoCodigo;
         if(EstoqueDeProdutos.estoque.containsKey(codigo)){
             Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
-             produtosDoCodigo = estoque.get(codigo);
+            produtosDoCodigo = estoque.get(codigo);
             return produtosDoCodigo;
         }else{
             Utilitario.ImprimaMensagem("*                    Produto Indisponível!                      *");
@@ -206,7 +206,7 @@ public class EstoqueDeProdutos {
         }
     }
     
-     private static void exibirEstoqueCliente(){
+     public static void exibirEstoqueCliente(){
         Produto p = null;
         Utilitario.ImprimaMensagem("*                     PRODUTOS DISPONÍVEIS                      *");
         Iterator listasDeCodigos = EstoqueDeProdutos.estoque.keySet().iterator();
