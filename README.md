@@ -24,6 +24,7 @@ Sistema de gerenciamento Vendas de Supemercado, desenvolvido como projeto final 
 
 ## Uso
 ![Recordit GIF](http://g.recordit.co/hsENae0SS5.gif)
+- Para utilizar o sistema, escolha uma opção apresentada pelo menu e siga as instruções para cadastrar produtos, emitir relatórios, acessar caixas, colocar produtos no carrinho de compras e efetuar compras.
 
 ## Instalação
 ### Clone
