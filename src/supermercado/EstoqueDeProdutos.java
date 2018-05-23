@@ -177,6 +177,7 @@ public class EstoqueDeProdutos {
         return 0.0;
     }
     
+    //Verifica s eexiste o produto no estoque, caso não exista, retorna null
     public static Produto seekProduto(String codigo) {
         Produto produto = null;
         if(estoque.containsKey(codigo)){
@@ -185,28 +186,52 @@ public class EstoqueDeProdutos {
             if(it.hasNext()){
                 produto = (Produto) it.next();
                 return produto;
-            }else{
-                Utilitario.ImprimaMensagem("*                   Produto não encontrado!                     *");
             }
+        }else{
+                Utilitario.ImprimaMensagem("*                   Produto indisponível!                     *");
+               
         }
         return produto;
     }
     
-    public static List produtoParaCompra(String codigo, int quantidade){
+    //método que verifica se tem o produto no estoque ou se existe a quanitdade desejada do mesmo, caso alguma dessas afirmações seja falsa, ele retorna null
+    public static boolean produtoParaCompra(String codigo, int quantidade){
         //Verifica se existe o produto no estoque e se possui a quantidade esperada
         //if(EstoqueDeProdutos.estoque.containsKey(codigo) && EstoqueDeProdutos.estoque.get(codigo).size() >= quantidade){
-        List<Produto> produtosDoCodigo;
+        boolean retorno = false;
+        List<Produto> produtosDoCodigo = null;
         if(EstoqueDeProdutos.estoque.containsKey(codigo)){
-            Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
-             produtosDoCodigo = estoque.get(codigo);
-            return produtosDoCodigo;
+            //Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
+            produtosDoCodigo = estoque.get(codigo);
+            if(produtosDoCodigo.get(0) instanceof ProdutoUnitario){
+                if(produtosDoCodigo.size() >= quantidade){
+                    //retorno = produtosDoCodigo.get(0);
+                    retorno = true;
+                }else{
+                    Utilitario.ImprimaMensagem("*                    Infelizmente só possuimos "+produtosDoCodigo.size()+" unidades                      *");
+                    retorno = false;
+                }
+            }
+            if(produtosDoCodigo.get(0) instanceof ProdutoQuilo){
+                //List listkg = EstoqueDeProdutos.estoque.get(codigo);
+                ProdutoQuilo prodKg = (ProdutoQuilo) produtosDoCodigo.get(0);
+               
+                if(prodKg.getQtdQuilos() >= quantidade){
+                    retorno = true;
+                    
+                }else{
+                    Utilitario.ImprimaMensagem("*                    Infelizmente só temos "+prodKg.getQtdQuilos()+" KG deste produto!                      *");
+                    retorno = false;
+                }
+            } 
         }else{
             Utilitario.ImprimaMensagem("*                    Produto Indisponível!                      *");
-            return null;
+            retorno = false;
         }
+        return retorno;
     }
     
-     private static void exibirEstoqueCliente(){
+     public static void exibirEstoqueCliente(){
         Produto p = null;
         Utilitario.ImprimaMensagem("*                     PRODUTOS DISPONÍVEIS                      *");
         Iterator listasDeCodigos = EstoqueDeProdutos.estoque.keySet().iterator();

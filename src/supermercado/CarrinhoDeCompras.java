@@ -29,50 +29,48 @@ public class CarrinhoDeCompras{
         this.valorCompra = valor;
     }
     public void addProduto(Produto produto, double quantidade){
+        List<Produto> produtosDoCodigo;
         String codigo = produto.getCodigo();
-        List<Produto> novoProduto;
         
-        //Se ja existir um produto do mesmo código, ele soma o novo produto aos ja existentes no carrinho
         if(produtosCarrinho.containsKey(codigo)){
+            produtosDoCodigo = produtosCarrinho.get(codigo);
             
-            novoProduto = produtosCarrinho.get(codigo);
-            //Se for unitário, adiciona os produtos 1 por 1 na lista dentro do Map
-            if(produto instanceof ProdutoUnitario){
-                while (quantidade > 0) {                
-                    novoProduto.add(produto);
-                    quantidade--;
+            if (produtosDoCodigo.get(0).getNome().equals(produto.getNome())){
+                if (produto instanceof ProdutoUnitario) {
+                    while (quantidade > 0) {                
+                        produtosDoCodigo.add(produto);
+                        quantidade--;
+                    }
                 }
-                
-                //Se for por Kilo, adiciona somente uma vez, pois a quantidade é dada em kilos
-            }else if (produto instanceof ProdutoQuilo) {
-                ProdutoQuilo pdt = (ProdutoQuilo) novoProduto.get(0);
-                pdt.setQtdQuilos(pdt.getQtdQuilos() + quantidade);
-                novoProduto = new LinkedList<Produto>();
-                novoProduto.add(pdt);
+                else if (produto instanceof ProdutoQuilo) {
+                    ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
+                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
+                    produtosDoCodigo = new LinkedList<Produto>();
+                    produtosDoCodigo.add(pdt);
+                }
+
+                produtosCarrinho.put(codigo, produtosDoCodigo);
             }
-            
-            produtosCarrinho.get(codigo).add(produto);
-            
-            //se não existir este tipo de produto no carrinho, é então criado uma nova lista para ser adicionada ao Map juntamente com o 
-            // código do novo produto como Key.
+            else{
+                System.out.println("ATENÇÃO\tATENÇÃO\tATENÇÃO\tATENÇÃO\tATENÇÃO");
+                System.out.println("Produto NÃO foi adicionado pois o codigo '" + produto.getCodigo() + "' possui apenas produtos '"
+                +produtosDoCodigo.get(0).getNome() + "' e voce esta tentando adicionar '" + produto.getNome() + "'");
+            }
         }else{
+            produtosDoCodigo = new LinkedList<Produto>();
             
-            novoProduto = new LinkedList<Produto>();
             if (produto instanceof ProdutoUnitario) {
                 while (quantidade > 0) {                
-                    novoProduto.add(produto);
+                    produtosDoCodigo.add(produto);
                     quantidade--;
                 }
             } 
             else if (produto instanceof ProdutoQuilo) {
-                ((ProdutoQuilo) produto).setQtdQuilos(quantidade);
-                novoProduto.add(produto);
-               
-            } 
+                produtosDoCodigo.add(produto);
+            }
             
-            produtosCarrinho.put(codigo, novoProduto);
+            produtosCarrinho.put(codigo, produtosDoCodigo);
         }
-        
     }
     
     public void exibirCarrinhoCliente(){
@@ -85,7 +83,7 @@ public class CarrinhoDeCompras{
             String codigo = (String)it.next();
             Iterator produtos = produtosCarrinho.get(codigo).iterator();
             boolean mostrarNomeProduto = true;
-            ProdutoUnitario prodUnidade = (ProdutoUnitario) produtosCarrinho.get(codigo);
+            List prodUnidade = (List) produtosCarrinho.get(codigo);
             while (produtos.hasNext()) {
                 p = (Produto)produtos.next();
                 
