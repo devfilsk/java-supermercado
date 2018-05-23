@@ -44,7 +44,7 @@ public class CarrinhoDeCompras{
                 }
                 else if (produto instanceof ProdutoQuilo) {
                     ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
-                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
+                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  quantidade);
                     produtosDoCodigo = new LinkedList<Produto>();
                     produtosDoCodigo.add(pdt);
                 }
@@ -66,6 +66,7 @@ public class CarrinhoDeCompras{
                 }
             } 
             else if (produto instanceof ProdutoQuilo) {
+                ((ProdutoQuilo) produto).setQtdQuilos(quantidade);
                 produtosDoCodigo.add(produto);
             }
             
@@ -86,7 +87,7 @@ public class CarrinhoDeCompras{
             List prodUnidade = (List) produtosCarrinho.get(codigo);
             while (produtos.hasNext()) {
                 p = (Produto)produtos.next();
-                
+                quantidade++;
                 if (mostrarNomeProduto) {
                     System.out.println("Código: " + codigo);
                     System.out.println("Produto: " + p.getNome());
@@ -99,10 +100,7 @@ public class CarrinhoDeCompras{
                 if (p instanceof ProdutoUnitario) {
                     System.out.println("Quantidade no carrinho = " + quantidade + "\n");
                 }
-                quantidade++;
             }
-            
-           
             quantidade = 0;
         }
         System.out.println();
