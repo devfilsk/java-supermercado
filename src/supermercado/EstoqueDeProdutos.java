@@ -179,19 +179,34 @@ public class EstoqueDeProdutos {
     
     //Verifica s eexiste o produto no estoque, caso não exista, retorna null
     public static Produto seekProduto(String codigo) {
-        Produto produto = null;
-        if(estoque.containsKey(codigo)){
-            Iterator it = EstoqueDeProdutos.estoque.get(codigo).iterator();
+        Map<String, List<Produto>> temp = estoque.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e-> new LinkedList(e.getValue())));
+        if(temp.containsKey(codigo)){
+            Iterator it = temp.get(codigo).iterator();
             
             if(it.hasNext()){
-                produto = (Produto) it.next();
-                return produto;
+                Produto pdt = (Produto) it.next();
+                if (pdt instanceof ProdutoUnitario) {
+                    String codigo_un = pdt.getCodigo();
+                    String nome_un = pdt.getNome();
+                    double valor_un = pdt.getValor();
+                    ProdutoUnitario pdt_un = new ProdutoUnitario(codigo_un, nome_un, valor_un);
+                    return pdt_un;
+                }
+                else if (pdt instanceof ProdutoQuilo){
+                    String codigo_quilo = pdt.getCodigo();
+                    String nome_quilo = pdt.getNome();
+                    double valor_quilo = pdt.getValor();
+                    double qtd_quilo = ((ProdutoQuilo) pdt).getQtdQuilos();
+                    
+                    ProdutoQuilo pdtquilo = new ProdutoQuilo(codigo_quilo, nome_quilo, 
+                            valor_quilo, qtd_quilo);
+                    return pdtquilo;
+                }
             }
         }else{
                 Utilitario.ImprimaMensagem("*                   Produto indisponível!                     *");
-               
         }
-        return produto;
+        return null;
     }
     
     //método que verifica se tem o produto no estoque ou se existe a quanitdade desejada do mesmo, caso alguma dessas afirmações seja falsa, ele retorna null
