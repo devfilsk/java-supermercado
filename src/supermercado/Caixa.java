@@ -22,6 +22,7 @@ public class Caixa {
     public Caixa(int numero){
         this.numeroDoCaixa = numero;
         this.balanca = new Balanca();
+        vendas = new ArrayList<>();
     }    
 
     public ArrayList<Venda> getVendas() {
@@ -65,11 +66,18 @@ public class Caixa {
         return "Caixa " + numeroDoCaixa;
     }
     
-    public void iniciarVenda(Cliente cliente){
+    public Venda iniciarVenda(Cliente cliente){
         Venda venda = new Venda(this, cliente);
-        System.out.println("VENDA INICIADA");
         venda.vender();
-        vendas.add(venda);
+        boolean pagamento = venda.formaDePagamento();
+        if(pagamento){
+             vendas.add(venda);
+        }else{
+            Utilitario.ImprimaMensagem("*  !!!! FALHA AO COMPRAR !!!!  *");
+            return null;
+        }
+       
+        return venda;
     }
     
     

@@ -108,6 +108,11 @@ public class CarrinhoDeCompras{
         System.out.println();
     }
     
+    //Verifica se o carrinho de compras está vazio
+    public boolean verificaCarrinho(){
+        return this.produtosCarrinho.size() > 0 ? true : false;
+    }
+    
      public double calcularPrecoCarrinho(){
         
         // Calcular o valor total da compra usando o somatorio de:
@@ -142,7 +147,6 @@ public class CarrinhoDeCompras{
                 else if(produtoList instanceof ProdutoUnitario){
                     //QUAL A MELHOR FORMA DE CHAMAR O MÉTODO calcularValorPorUnidade chamar da balança ou do caixa???
                      quantidade = list.size();
-                     System.out.println(list.size());
                      ProdutoUnitario produtounit = (ProdutoUnitario) list.get(0);
                      valorTotal += Balanca.calcularValorPorItem(produtounit.getValor(), quantidade);
                 } 

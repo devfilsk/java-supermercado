@@ -233,7 +233,7 @@ public class Supermercado{
                                 break;
                             case 2:
                                 // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
-                                if (true){
+                                if (cli.getCarrinho().verificaCarrinho()){
                                     int opcaoCaixaCompra;
                                     List<Caixa> caixasDisponiveis = ObtenhaCaixasDisponiveis();
                                     Utilitario.ImprimaMensagem("*                           CAIXAS                              *");
@@ -245,14 +245,14 @@ public class Supermercado{
                                         if (opcaoCaixaCompra > 0 && opcaoCaixaCompra <= caixasDisponiveis.size()) {
                                             Caixa caixaSelecionado = caixasDisponiveis.get(Integer.valueOf(opcaoCaixaCompra)-1);
                                             
-                                            //caixaSelecionado.iniciarVenda(Cliente);
+                                            Venda venda = caixaSelecionado.iniciarVenda(cli);
                                             
                                             sairMenuCliente = true;
                                             opcaoCaixaCompra = 0;
                                             Utilitario.ImprimaMensagem("*           Obrigado por comprar conosco! Volte sempre!         *");
                                         }
                                     }while(opcaoCaixaCompra != 0);
-                                } else {
+                                }else {
                                     Utilitario.ImprimaMensagem("*  Seu carrinho de compras está vazio. Escolha alguns produtos  *");
                                     sairMenuEscolhaDeCaixas = true;
                                 }
@@ -445,7 +445,6 @@ public class Supermercado{
     // Método responsável por mostrar caixas com operadores logados.
     private static void MostrarCaixasEmFuncionamento(){
         if (ObtenhaCaixasDisponiveis().isEmpty()) {
-            System.out.println(ObtenhaCaixasDisponiveis());
             System.out.println("Nenhum caixa está atendendo no momento. =(");
         }
         else {

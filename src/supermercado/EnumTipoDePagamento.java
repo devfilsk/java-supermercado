@@ -10,5 +10,10 @@ package supermercado;
  * @author Richiely Batista
  */
 public enum EnumTipoDePagamento {
-    DINHEIRO, CARTAO
+    DINHEIRO, CARTAO;
+
+   
+    
+    
+    
 }
