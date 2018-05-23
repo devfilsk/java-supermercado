@@ -17,14 +17,23 @@ public class Caixa {
         this.numeroDoCaixa = numero;
         this.operadorCaixa = operador;
         this.balanca = new Balanca();
+        vendas = new ArrayList<>();
     }    
 
     public Caixa(int numero){
         this.numeroDoCaixa = numero;
         this.balanca = new Balanca();
         vendas = new ArrayList<>();
-    }    
-
+    } 
+    
+    public void relatorioCaixa(){
+        Iterator it = vendas.iterator();
+        while(it.hasNext()){
+            Venda venda = (Venda) it.next();
+            Utilitario.ImprimaMensagem(venda.dadosVenda());
+        }
+    }
+    
     public ArrayList<Venda> getVendas() {
         return vendas;
     }
@@ -59,11 +68,11 @@ public class Caixa {
     
     private double calcularValorPorPeso(double valorDoPeso, double quantidade){
         return balanca.calcularValorPorPeso(valorDoPeso, quantidade);
-    } 
-
+    }
+    
     @Override
     public String toString() {
-        return "Caixa " + numeroDoCaixa;
+         return "Caixa " + numeroDoCaixa;        
     }
     
     public Venda iniciarVenda(Cliente cliente){

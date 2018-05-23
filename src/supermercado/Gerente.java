@@ -46,7 +46,11 @@ public class Gerente extends Funcionario {
         // acessa caixa por caixa
         while (i.hasNext()) { 
             Caixa caixa = (Caixa)i.next();
-            Iterator itVendas = caixa.getVendas().iterator();
+            Utilitario.ImprimaMensagem(
+                  "\n*********          Relatório do Caixa: "+ caixa.getNumeroDoCaixa() +"          *********\n");
+            caixa.relatorioCaixa();
+            
+            /*Iterator itVendas = caixa.getVendas().iterator();
             // acessa vendas do caixa
             while (itVendas.hasNext()) {
                 Venda venda = (Venda)itVendas.next();
@@ -55,7 +59,7 @@ public class Gerente extends Funcionario {
                 // listar forma de pagamento
                 // listar valor total
                 // listar troco se houver
-            }
+            }*/
                     
         }
         

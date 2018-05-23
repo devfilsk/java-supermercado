@@ -45,8 +45,11 @@ public class Supermercado{
             int opcao = scanner.nextInt();
         
             switch(opcao){
-                case 1: // Gerente
+                case 1: // Gerente 
+                    //( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout
                     ControleMenuGerente(gerente, tentativas, chances);
+                    
+                    
                     break;
                 case 2: // Funcionário (operador)
                     Boolean sairMenuOperador = false;
@@ -368,6 +371,7 @@ public class Supermercado{
                 case 3: // emitir relatorio vendas
                     gerente.emitirRelatorioDeVendas(caixas);
                     // TODO
+                    
                     System.out.println("emitindo vendas...");
                     break;
                 case 0:

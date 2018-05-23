@@ -17,7 +17,7 @@ public class Venda {
         this.cliente = cliente;
         this.caixa = caixa;
     }
-
+    
     public EnumTipoDePagamento getFormaDePagamento() {
         return formaDePAgamento;
     }
@@ -25,13 +25,24 @@ public class Venda {
     public void setFormaDePagamento(EnumTipoDePagamento formaDePAgamento) {
         this.formaDePAgamento = formaDePAgamento;
     }
-    
+    public Caixa getCaixa(){
+        return this.caixa;
+    }
     public double getValorVenda(){
         return this.valorVenda;
     }
     
     public void vender(){
         this.valorVenda = cliente.getCarrinho().calcularPrecoCarrinho();        
+    }
+    
+    public String dadosVenda(){
+        String dados =  "\n"
+                        + "*    Operador do Caixa: "+ caixa.getOperadorCaixa().getNome()+" *\n"
+                        + "*    Forma de Pagamento: "+ this.formaDePAgamento+"\n"
+                        + "*    Valor da venda: "+ this.valorVenda+" \n"
+                        + "*    Troco: "+ this.troco;
+        return dados;
     }
     
     //Se ocorrer tudo OK com a forma de pagamento, retorna true
@@ -47,6 +58,7 @@ public class Venda {
        
         if((int)EnumTipoDePagamento.CARTAO.ordinal() == formaPagamento-1){
             System.out.println("Compra realizada com sucesso!");
+            this.formaDePAgamento = getFormaDePagamento().CARTAO;
             return true;
         }
         else if((int)EnumTipoDePagamento.DINHEIRO.ordinal() == formaPagamento-1){
@@ -58,6 +70,7 @@ public class Venda {
                     if(dinheiro > getValorVenda()){
                         this.troco = dinheiro - getValorVenda();
                         Utilitario.ImprimaMensagem("Troco de: "+ this.troco);
+                        this.formaDePAgamento = getFormaDePagamento().DINHEIRO;
                         return true;
                     }else{
                         System.out.println("Valor insuficiente!!!");
