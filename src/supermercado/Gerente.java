@@ -46,7 +46,7 @@ public class Gerente extends Funcionario {
         while (i.hasNext()) { 
             Caixa caixa = (Caixa)i.next();
             Utilitario.ImprimaMensagem(
-                  "\n*                   Relatório do Caixa: "+ caixa.getNumeroDoCaixa() +"                  *\n");
+                  "*                   Relatório do Caixa: "+ caixa.getNumeroDoCaixa() +"                  *");
             caixa.relatorioCaixa();
         }
     }

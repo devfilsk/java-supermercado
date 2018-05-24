@@ -45,8 +45,8 @@ public class EstoqueDeProdutos {
                     }
                 }
                 else if (produto instanceof ProdutoQuilo) {
-                    ProdutoQuilo pdt = (ProdutoQuilo)produtosDoCodigo.get(0);
-                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  ((ProdutoQuilo) produto).getQtdQuilos());
+                    ProdutoQuilo pdt = ObtenhaProdutoQuiloTemporario(produto);
+                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  quantidade);
                     produtosDoCodigo = new LinkedList<Produto>();
                     produtosDoCodigo.add(pdt);
                 }
@@ -101,7 +101,7 @@ public class EstoqueDeProdutos {
                 ProdutoQuilo pdtQuilo = ObtenhaProdutoQuiloTemporario(p);
                         
                 double peso = pdtQuilo.getQtdQuilos() - quantidade;
-                removerDoEstoque = peso < 0 ? true : false;
+                removerDoEstoque = peso <= 0 ? true : false;
                 pdtQuilo.setQtdQuilos(peso);
                 produtosDoCodigo.clear();
                 produtosDoCodigo.add(pdtQuilo);
@@ -227,8 +227,13 @@ public class EstoqueDeProdutos {
                 if(prodKg.getQtdQuilos() >= quantidade){
                     retorno = true;
                 }else{
-                    Utilitario.ImprimaMensagem("*                    Infelizmente só temos "+prodKg.getQtdQuilos()+" KG deste produto!                      *");
-                    retorno = false;
+                    if (validarQuantidade) {
+                        Utilitario.ImprimaMensagem("*                    Infelizmente só temos "+prodKg.getQtdQuilos()+" KG deste produto!                      *");
+                        retorno = false;
+                    }
+                    else{
+                        retorno = true;
+                    }
                 }
             } 
         }else{
@@ -301,8 +306,8 @@ public class EstoqueDeProdutos {
         ProdutoUnitario feijao = new ProdutoUnitario("30", "Feijão", 4.99);
         adicionarProduto(feijao, 8.0);
         
-        ProdutoQuilo melancia = new ProdutoQuilo("11", "Tomate", 3.50, 100);
-        adicionarProduto(melancia, 0);
+        ProdutoQuilo tomate = new ProdutoQuilo("11", "Tomate", 3.50, 100);
+        adicionarProduto(tomate, 0);
         
         System.out.println("*                  Estoque criado com sucesso!                  *");
         System.out.println("*****************************************************************");

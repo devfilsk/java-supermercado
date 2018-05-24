@@ -214,6 +214,8 @@ public class Supermercado{
                                                     EstoqueDeProdutos.removerProduto(codigo, quantidade);
                                                 } 
                                             }                                        
+                                        } else{
+                                            System.out.println("Produto de código " + codigo + " não encontrado no estoque.");   
                                         }
 
                                         if(codigo.equals(0) || quantidade == 0){
@@ -383,7 +385,8 @@ public class Supermercado{
 
     private static void MenuGerenteRemoverProduto(Gerente gerente) {
         // remover produto
-        System.out.println("Digite o código do produto: ");
+        Utilitario.ImprimaMensagem("*                        Remover produtos                       *");
+        System.out.println("Digite o código do produto para remover:");
         String codigoProduto  = scanner.next();
         Produto p = EstoqueDeProdutos.seekProduto(codigoProduto);
         if(p != null){
@@ -499,16 +502,41 @@ public class Supermercado{
         Utilitario.ImprimaMensagem("*                    ADICIONANDO PRODUTO                        *");
         System.out.println("Código do produto:");
         String codigoProduto  = scanner.next();
-        System.out.println("Nome do produto:");
-        //String nomeProduto  = scanner.nextLine();
-        String nomeProduto  = scanner.next();
-        System.out.println("Preço da unidade do produto (exemplo: 99,99):");
-        double precoProduto  = scanner.nextDouble();
-        System.out.println("Quantidade de itens:");
-        int quantidadeProduto  = scanner.nextInt();
-        ProdutoUnitario produto = new ProdutoUnitario(codigoProduto + "0", nomeProduto, precoProduto);
-        System.out.println("Adicionado " + quantidadeProduto + " unidades do produto: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
-        gerente.adicionarProduto(produto, quantidadeProduto);
+        
+        Produto produtoEmEstoque = EstoqueDeProdutos.seekProduto(codigoProduto);
+        
+        // Caso o codigo do produto já existir no estoque,
+        // manipulamos o produto, senão adicionamos um novo.
+        if (produtoEmEstoque != null) { 
+            if (produtoEmEstoque instanceof ProdutoUnitario) {
+                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "já existe no estoque!");
+                AddProdutoUnitario(produtoEmEstoque, gerente);
+            }
+            else{
+                System.out.println("Esse código corresponde a um produto do tipo 'quilo' (" + produtoEmEstoque.getNome() + "). Deseja continuar?");
+                System.out.println(" ( 1 ) Sim \n ( 2 ) Não ");
+                int opcaoContinuar  = scanner.nextInt();
+                switch(opcaoContinuar){
+                    case 1:
+                        AddProdutoQuilo(produtoEmEstoque, gerente);
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else {
+            System.out.println("Nome do produto:");
+            String nomeProduto  = scanner.next();
+            System.out.println("Preço da unidade do produto (exemplo: 99,99):");
+            double precoProduto  = scanner.nextDouble();
+            System.out.println("Quantidade de itens:");
+            int quantidadeProduto  = scanner.nextInt();
+            ProdutoUnitario produto = new ProdutoUnitario(codigoProduto + "0", nomeProduto, precoProduto);
+            System.out.println("Adicionado " + quantidadeProduto + " unidades do produto: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
+            gerente.adicionarProduto(produto, quantidadeProduto);
+        }
     }
     
     // Método responsável por apresentar o menu de cadastro de produtos por quilo.
@@ -516,16 +544,54 @@ public class Supermercado{
         Utilitario.ImprimaMensagem("*                    ADICIONANDO PRODUTO                        *");
         System.out.println("Código do produto:");
         String codigoProduto  = scanner.next();
-        System.out.println("Nome do produto:");
-        //String nomeProduto  = scanner.nextLine();
-        String nomeProduto  = scanner.next();
-        System.out.println("Preço do quilo de " + nomeProduto + " (exemplo: 99,99):");
-        double precoProduto  = scanner.nextDouble();
-        System.out.println("Quilos de " + nomeProduto + ":");
+        
+        Produto produtoEmEstoque = EstoqueDeProdutos.seekProduto(codigoProduto);
+        // Caso o codigo do produto já existir no estoque,
+        // manipulamos o produto, senão adicionamos um novo.
+        if (produtoEmEstoque != null) { 
+            if (produtoEmEstoque instanceof ProdutoQuilo) {
+                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "já existe no estoque!");
+                AddProdutoQuilo(produtoEmEstoque, gerente);
+            }
+            else{
+                System.out.println("Esse código corresponde a um produto do tipo 'unidade'. Deseja continuar?");
+                System.out.println(" ( 1 ) Sim \n ( 2 ) Não ");
+                int opcaoContinuar  = scanner.nextInt();
+                switch(opcaoContinuar){
+                    case 1:
+                        AddProdutoUnitario(produtoEmEstoque, gerente);
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else {
+            System.out.println("Nome do produto:");
+            String nomeProduto  = scanner.next();
+            System.out.println("Preço do quilo de " + nomeProduto + " (exemplo: 99,99):");
+            double precoProduto  = scanner.nextDouble();
+            System.out.println("Quilos de " + nomeProduto + ":");
+            double quantidadeProduto  = scanner.nextDouble();
+            ProdutoQuilo produto = new ProdutoQuilo(codigoProduto + "0", nomeProduto, precoProduto, quantidadeProduto);
+            System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
+            gerente.adicionarProduto(produto, 0);
+        }
+    }
+    
+    private static void AddProdutoUnitario(Produto produtoEmEstoque, Gerente gerente) {
+        System.out.println("Deseja adicionar quantos itens?");
+        int quantidadeProduto  = scanner.nextInt();
+        System.out.println("Adicionado " + quantidadeProduto + " unidades do produto: '" + produtoEmEstoque.getCodigo() + "- " + produtoEmEstoque.getNome() + "'");
+        gerente.adicionarProduto(produtoEmEstoque, quantidadeProduto);
+    }
+    
+    private static void AddProdutoQuilo(Produto produtoEmEstoque, Gerente gerente) {
+        System.out.println("Deseja adicionar quantos quilos de " + produtoEmEstoque.getNome() + "?");
         double quantidadeProduto  = scanner.nextDouble();
-        ProdutoQuilo produto = new ProdutoQuilo(codigoProduto + "0", nomeProduto, precoProduto, quantidadeProduto);
-        System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produto.getCodigo() + "- " + produto.getNome() + "'");
-        gerente.adicionarProduto(produto, 0);
+        System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produtoEmEstoque.getCodigo() + "- " + produtoEmEstoque.getNome() + "'");
+        gerente.adicionarProduto(produtoEmEstoque, quantidadeProduto);
     }
     
     public static void caixasDisponiveis(){
@@ -534,8 +600,6 @@ public class Supermercado{
         System.out.println("/************************************************************/");
         CriarFuncionarios();
         MostrarCaixasEmFuncionamento();
-        
-        
     }
     
 }

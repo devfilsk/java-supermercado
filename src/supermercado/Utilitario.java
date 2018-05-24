@@ -21,6 +21,5 @@ public class Utilitario {
         System.out.println(mensagem1); 
         System.out.println(mensagem2); 
         System.out.println("*****************************************************************");
-        
     }
 }
