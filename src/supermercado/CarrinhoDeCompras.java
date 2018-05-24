@@ -106,7 +106,7 @@ public class CarrinhoDeCompras{
             }
             quantidade = 0;
         }
-        System.out.println();
+        Utilitario.Continuar();
     }
     
     //Verifica se o carrinho de compras está vazio

@@ -48,6 +48,7 @@ public class Gerente extends Funcionario {
             Utilitario.ImprimaMensagem(
                   "*                   Relatório do Caixa: "+ caixa.getNumeroDoCaixa() +"                  *");
             caixa.relatorioCaixa();
+            Utilitario.Continuar();
         }
     }
 }

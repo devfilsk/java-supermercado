@@ -298,16 +298,73 @@ public class EstoqueDeProdutos {
         System.out.println("*              Carga inicial do estoque de produtos             *");
         System.out.println("*                            Aguarde...                         *");
         ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
-        adicionarProduto(leite, 2.0);
+        adicionarProduto(leite, 50.0);
         
-        ProdutoUnitario arroz = new ProdutoUnitario("20", "Arroz", 11.95);
-        adicionarProduto(arroz, 6.0);
+        ProdutoUnitario sal = new ProdutoUnitario("20", "Pacote de sal", 0.95);
+        adicionarProduto(sal, 30.0);
         
-        ProdutoUnitario feijao = new ProdutoUnitario("30", "Feijão", 4.99);
-        adicionarProduto(feijao, 8.0);
+        ProdutoUnitario acucar = new ProdutoUnitario("30", "Pacote de açúcar", 1.50);
+        adicionarProduto(acucar, 30.0);
+        
+        ProdutoUnitario refrigerante = new ProdutoUnitario("40", "Refrigerante 2 lt", 5.50);
+        adicionarProduto(refrigerante, 100.0);
+        
+        ProdutoUnitario cerveja = new ProdutoUnitario("50", "Cerveja 600 ml", 8.50);
+        adicionarProduto(cerveja, 100.0);
+        
+        ProdutoUnitario arroz = new ProdutoUnitario("60", "Arroz", 11.95);
+        adicionarProduto(arroz, 150.0);
+        
+        ProdutoUnitario sabao = new ProdutoUnitario("70", "Caixa de sabão em pó", 8.65);
+        adicionarProduto(sabao, 75);
+        
+        ProdutoUnitario macarrao = new ProdutoUnitario("80", "Pacote de macarrão", 1.39);
+        adicionarProduto(macarrao, 80.0);
+        
+        ProdutoUnitario biscoito = new ProdutoUnitario("90", "Saco de biscoito", 4.99);
+        adicionarProduto(biscoito, 35.0);
+        
+        ProdutoUnitario cafe = new ProdutoUnitario("100", "Café", 4.99);
+        adicionarProduto(cafe, 60.0);
+        
+        ProdutoUnitario oleo = new ProdutoUnitario("110", "Óleo de soja", 3.20);
+        adicionarProduto(oleo, 64.0);
+        
+        ProdutoUnitario feijao = new ProdutoUnitario("120", "Feijão", 4.99);
+        adicionarProduto(feijao, 80.0);
+        
+        ProdutoUnitario esponja = new ProdutoUnitario("130", "Esponja metálica", 3.50);
+        adicionarProduto(esponja, 50.0);
+        
+        ProdutoUnitario detergente = new ProdutoUnitario("140", "Detergente", 0.99);
+        adicionarProduto(detergente, 75.0);
+        
+        ProdutoUnitario farinha = new ProdutoUnitario("150", "Saco de farinha", 2.99);
+        adicionarProduto(farinha, 45.0);
+        
+        ProdutoUnitario manteiga = new ProdutoUnitario("160", "Manteiga", 5.50);
+        adicionarProduto(manteiga, 65.0);
+        
+        ProdutoUnitario sabonete = new ProdutoUnitario("170", "Sabonete", 0.65);
+        adicionarProduto(sabonete, 150.0);
         
         ProdutoQuilo tomate = new ProdutoQuilo("11", "Tomate", 3.50, 100);
         adicionarProduto(tomate, 0);
+        
+        ProdutoQuilo batata = new ProdutoQuilo("21", "Batata", 4.99, 89);
+        adicionarProduto(batata, 0);
+        
+        ProdutoQuilo carne = new ProdutoQuilo("31", "Carne de boi", 17.50, 350);
+        adicionarProduto(carne, 0);
+        
+        ProdutoQuilo limao = new ProdutoQuilo("41", "Limão", 1.99, 75);
+        adicionarProduto(limao, 0);
+        
+        ProdutoQuilo mandioca = new ProdutoQuilo("51", "Mandioca", 2.45, 134);
+        adicionarProduto(mandioca, 0);
+        
+        ProdutoQuilo maca = new ProdutoQuilo("61", "Maçã", 3.50, 65);
+        adicionarProduto(maca, 0);
         
         System.out.println("*                  Estoque criado com sucesso!                  *");
         System.out.println("*****************************************************************");

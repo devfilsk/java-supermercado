@@ -65,8 +65,7 @@ public class Supermercado{
                                             
                                             if(FuncionarioLogado(senhaCaixa) == null){
                                                 Utilitario.ImprimaMensagem("*               Bem vindo ao Caixa 1, " + f.getNome() + "               *");
-                                                
-                                                System.out.println();
+                                                Utilitario.Continuar();
                                                 c1.setOperadorCaixa(f);
                                                 sairMenuOperador = true;
                                                 acessouCaixa = true;
@@ -101,7 +100,7 @@ public class Supermercado{
                                             
                                             if(FuncionarioLogado(senhaCaixa) == null){
                                                 Utilitario.ImprimaMensagem("*               Bem vindo ao Caixa 2, " + f.getNome() + "               *");
-                                                System.out.println();
+                                                Utilitario.Continuar();
                                                 c2.setOperadorCaixa(f);
                                                 sairMenuOperador = true;
                                                 acessouCaixa = true;
@@ -136,7 +135,7 @@ public class Supermercado{
                                             
                                             if(FuncionarioLogado(senhaCaixa) == null){
                                                 Utilitario.ImprimaMensagem("*               Bem vindo ao Caixa 3, " + f.getNome() + "               *");
-                                                System.out.println();
+                                                Utilitario.Continuar();
                                                 c3.setOperadorCaixa(f);
                                                 sairMenuOperador = true;
                                                 acessouCaixa = true;
@@ -287,17 +286,13 @@ public class Supermercado{
     // Método responsável por mostrar a mensagem de saudação do sistema.
     private static void Saudacao() {
         Utilitario.ImprimaMensagem("*   Bem vindo ao Sistema de Controle e Vendas do Supermercado   *");
-        System.out.println();
-        System.out.println("Aperte ENTER para continuar ...");
-        scanner.nextLine();
+        Utilitario.Continuar();
     }
 
     // Método responsável por realizar a carga iniicial do estoque de produtos.
     private static void Feed() {
         EstoqueDeProdutos.Feed();
-        System.out.println();
-        System.out.println("Aperte ENTER para continuar ...");
-        scanner.nextLine();
+        Utilitario.Continuar();
     }
     
     // Método responsável por criar os funcionários do sistema.
@@ -401,6 +396,7 @@ public class Supermercado{
                 if(verificacao){
                     EstoqueDeProdutos.removerProduto(codigoProduto, quantidade);
                     System.out.println(quantidade + " unidades de " + p.getNome() + " foram removidos do estoque.");
+                    Utilitario.Continuar();
                 }  
             }
             if(p instanceof ProdutoQuilo){
@@ -412,9 +408,9 @@ public class Supermercado{
                     ProdutoQuilo pkg = (ProdutoQuilo) p;
                     EstoqueDeProdutos.removerProduto(codigoProduto, quantidade);
                     System.out.println(quantidade + " quilos de " + p.getNome() + " foram removidos do estoque.");
+                    Utilitario.Continuar();
                 } 
             }
-            
         }
     }
     
@@ -509,7 +505,7 @@ public class Supermercado{
         // manipulamos o produto, senão adicionamos um novo.
         if (produtoEmEstoque != null) { 
             if (produtoEmEstoque instanceof ProdutoUnitario) {
-                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "já existe no estoque!");
+                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "-" + produtoEmEstoque.getNome() + " já existe no estoque!");
                 AddProdutoUnitario(produtoEmEstoque, gerente);
             }
             else{
@@ -550,7 +546,7 @@ public class Supermercado{
         // manipulamos o produto, senão adicionamos um novo.
         if (produtoEmEstoque != null) { 
             if (produtoEmEstoque instanceof ProdutoQuilo) {
-                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "já existe no estoque!");
+                System.out.println("O produto de código " + produtoEmEstoque.getCodigo() + "-" + produtoEmEstoque.getNome() + " já existe no estoque!");
                 AddProdutoQuilo(produtoEmEstoque, gerente);
             }
             else{
@@ -585,6 +581,7 @@ public class Supermercado{
         int quantidadeProduto  = scanner.nextInt();
         System.out.println("Adicionado " + quantidadeProduto + " unidades do produto: '" + produtoEmEstoque.getCodigo() + "- " + produtoEmEstoque.getNome() + "'");
         gerente.adicionarProduto(produtoEmEstoque, quantidadeProduto);
+        Utilitario.Continuar();
     }
     
     private static void AddProdutoQuilo(Produto produtoEmEstoque, Gerente gerente) {
@@ -592,6 +589,7 @@ public class Supermercado{
         double quantidadeProduto  = scanner.nextDouble();
         System.out.println("Adicionado " + quantidadeProduto + " quilos de: '" + produtoEmEstoque.getCodigo() + "- " + produtoEmEstoque.getNome() + "'");
         gerente.adicionarProduto(produtoEmEstoque, quantidadeProduto);
+        Utilitario.Continuar();
     }
     
     public static void caixasDisponiveis(){
