@@ -25,9 +25,11 @@ public class Venda {
     public void setFormaDePagamento(EnumTipoDePagamento formaDePAgamento) {
         this.formaDePAgamento = formaDePAgamento;
     }
+    
     public Caixa getCaixa(){
         return this.caixa;
     }
+    
     public double getValorVenda(){
         return this.valorVenda;
     }
@@ -40,8 +42,8 @@ public class Venda {
         String dados =  "\n"
                         + "*    Operador do Caixa: "+ caixa.getOperadorCaixa().getNome()+" *\n"
                         + "*    Forma de Pagamento: "+ this.formaDePAgamento+"\n"
-                        + "*    Valor da venda: "+ this.valorVenda+" \n"
-                        + "*    Troco: "+ this.troco;
+                        + "*    Valor da venda: "+ String.format( "%.2f", this.valorVenda)+" \n"
+                        + "*    Troco: "+ String.format( "%.2f", this.troco);
         return dados;
     }
     
@@ -50,9 +52,9 @@ public class Venda {
         Scanner scan = new Scanner(System.in);
         double dinheiro;
         vender();
-        Utilitario.ImprimaMensagem("*           O VALOR DA SUA COMPRA É: "+ getValorVenda()+"            *");
+        Utilitario.ImprimaMensagem("*           O VALOR DA SUA COMPRA É: R$ "+ String.format( "%.2f", getValorVenda()) +"            *");
         System.out.println("***********************************************************");
-        System.out.println("*   ESCOLHA SUA FORMA DE PAGAMENTO!  \n 1- DINHEIRO  \n 2- CARTÃO  *");
+        System.out.println("*   ESCOLHA SUA FORMA DE PAGAMENTO!  \n ( 1 ) DINHEIRO  \n ( 2 ) CARTÃO                                           *");
         System.out.println("***********************************************************");
         int formaPagamento = scan.nextInt();
        
@@ -62,21 +64,20 @@ public class Venda {
             return true;
         }
         else if((int)EnumTipoDePagamento.DINHEIRO.ordinal() == formaPagamento-1){
-            boolean pagDinheiro = false;
-                do{
-                    System.out.println("Entre com o valor em dinheiro: ");
-                    dinheiro = scan.nextDouble();
-                    
-                    if(dinheiro > getValorVenda()){
-                        this.troco = dinheiro - getValorVenda();
-                        Utilitario.ImprimaMensagem("Troco de: "+ this.troco);
-                        this.formaDePAgamento = getFormaDePagamento().DINHEIRO;
-                        return true;
-                    }else{
-                        System.out.println("Valor insuficiente!!!");
-                    }
-                }while(dinheiro < getValorVenda());
-            }
+            do{
+                System.out.println("Entre com o valor em dinheiro: ");
+                dinheiro = scan.nextDouble();
+
+                if(dinheiro > getValorVenda()){
+                    this.troco = dinheiro - getValorVenda();
+                    Utilitario.ImprimaMensagem("Troco de: R$"+  String.format( "%.2f", this.troco) );
+                    this.formaDePAgamento = getFormaDePagamento().DINHEIRO;
+                    return true;
+                }else{
+                    System.out.println("Valor insuficiente!!!");
+                }
+            }while(dinheiro < getValorVenda());
+        }
        return false;  
     }
 }

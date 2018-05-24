@@ -27,10 +27,14 @@ public class Caixa {
     } 
     
     public void relatorioCaixa(){
-        Iterator it = vendas.iterator();
-        while(it.hasNext()){
-            Venda venda = (Venda) it.next();
-            Utilitario.ImprimaMensagem(venda.dadosVenda());
+        if (vendas.size() > 0) {
+            Iterator it = vendas.iterator();
+            while(it.hasNext()){
+                Venda venda = (Venda) it.next();
+                Utilitario.ImprimaMensagem(venda.dadosVenda());
+            }
+        }else{
+            Utilitario.ImprimaMensagem("*           Não há vendas registradas nesse caixa              *");
         }
     }
     

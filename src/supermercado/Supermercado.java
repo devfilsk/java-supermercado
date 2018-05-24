@@ -46,14 +46,10 @@ public class Supermercado{
         
             switch(opcao){
                 case 1: // Gerente 
-                    //( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout
                     ControleMenuGerente(gerente, tentativas, chances);
-                    
-                    
                     break;
                 case 2: // Funcionário (operador)
                     Boolean sairMenuOperador = false;
-                    
                     do{
                         MostrarMenuListaDeCaixas(caixas);
                         int opCaixa = scanner.nextInt();
@@ -173,106 +169,111 @@ public class Supermercado{
                     scanner.nextLine();
                     break;
                 case 3: // cliente
-                    Boolean sairMenuCliente = false;
-                    Cliente cli = new Cliente();
-                    Utilitario.ImprimaMensagem("*                    Bem vindo, caro cliente!                   *",
-                                               "*               HOJE É UM ÓTIMO DIA PARA COMPRAS!               *");
-                    
-                    do{
-                        Boolean sairMenuEscolhaDeCaixas = false;
-                        System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar Preço \n ( 0 ) Sair");
-                        int opcaoCliente = scanner.nextInt();
-                        int quantidade = 0;
-                        switch (opcaoCliente){
-                            case 1:
-                                boolean continuarComprando = true;
-                                 Utilitario.ImprimaMensagem("*          Digite ( 0 ) para voltar ao menu a qualquer momento! ");
-                                do{
-                                    System.out.println("Digite o código do produto");
-                                    String codigo = scanner.next();
-                                        if(codigo.equals("0")){
-                                                break;
-                                        }
-                                    //busca o produto pelo código passado pelo cliente, verificando a disponibilidade do mesmo no método seekProduto
-                                    Produto p = EstoqueDeProdutos.seekProduto(codigo);
-                                    if(p != null){
-                                       
-                                        boolean verificacao;
-                                        if(p instanceof ProdutoUnitario){
-                                            System.out.println("Digite a quantidade de "+p.getNome().toUpperCase()+": "); 
-                                            quantidade = scanner.nextInt();
-                                            if(quantidade == 0){
-                                                break;
-                                            }
-                                            verificacao = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade);
-                                            if(verificacao){
-                                                cli.getCarrinho().addProduto(p, quantidade);
-                                                EstoqueDeProdutos.removerProduto(codigo, quantidade);
-                                            }  
-                                        }
-                                        if(p instanceof ProdutoQuilo){
-                                            System.out.println("Digite a quantida de quilos de "+p.getNome().toUpperCase()+": "); 
-                                            quantidade = scanner.nextInt();
-                                            //verifico se tem a quantidade do produto desejado
-                                            verificacao = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade);
-                                            if(verificacao){
-                                                ProdutoQuilo pkg = (ProdutoQuilo) p;
-                                                cli.getCarrinho().addProduto(p, quantidade);
-                                                EstoqueDeProdutos.removerProduto(codigo, quantidade);
-                                            } 
-                                        }                                        
-                                    }
-                                    
-                                    if(codigo.equals(0) || quantidade == 0){
-                                        continuarComprando = false;
-                                    }
-                                    scanner.nextLine();
-                                }while(continuarComprando);
-                                // TODO atribuir os produtos escolhidos ao carrinho do cliente
-                                //EscolherProduto();
-                                
-                                
-                                sairMenuCliente = false;
-                                break;
-                            case 2:
-                                // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
-                                if (cli.getCarrinho().verificaCarrinho()){
-                                    int opcaoCaixaCompra;
-                                    List<Caixa> caixasDisponiveis = ObtenhaCaixasDisponiveis();
-                                    Utilitario.ImprimaMensagem("*                           CAIXAS                              *");
+                    if (ObtenhaCaixasDisponiveis().size() > 0) {
+                        Boolean sairMenuCliente = false;
+                        Cliente cli = new Cliente();
+                        Utilitario.ImprimaMensagem("*                    Bem vindo, caro cliente!                   *",
+                                                   "*               HOJE É UM ÓTIMO DIA PARA COMPRAS!               *");
+
+                        do{
+                            Boolean sairMenuEscolhaDeCaixas = false;
+                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar Preço \n ( 0 ) Sair");
+                            int opcaoCliente = scanner.nextInt();
+                            double quantidade = 0;
+                            switch (opcaoCliente){
+                                case 1:
+                                    boolean continuarComprando = true;
+                                     Utilitario.ImprimaMensagem("*          Digite ( 0 ) para voltar ao menu a qualquer momento! ");
                                     do{
-                                        Utilitario.ImprimaMensagem("*                    Selecione um caixa                         *");
-                                        MostrarCaixasEmFuncionamento();
-                                        opcaoCaixaCompra = scanner.nextInt();
-                                        
-                                        if (opcaoCaixaCompra > 0 && opcaoCaixaCompra <= caixasDisponiveis.size()) {
-                                            Caixa caixaSelecionado = caixasDisponiveis.get(Integer.valueOf(opcaoCaixaCompra)-1);
-                                            
-                                            Venda venda = caixaSelecionado.iniciarVenda(cli);
-                                            
-                                            sairMenuCliente = true;
-                                            opcaoCaixaCompra = 0;
-                                            Utilitario.ImprimaMensagem("*           Obrigado por comprar conosco! Volte sempre!         *");
+                                        System.out.println("Digite o código do produto");
+                                        String codigo = scanner.next();
+                                            if(codigo.equals("0")){
+                                                    break;
+                                            }
+                                        //busca o produto pelo código passado pelo cliente, verificando a disponibilidade do mesmo no método seekProduto
+                                        Produto p = EstoqueDeProdutos.seekProduto(codigo);
+                                        if(p != null){
+
+                                            boolean verificacao;
+                                            if(p instanceof ProdutoUnitario){
+                                                System.out.println("Digite a quantidade de "+p.getNome().toUpperCase()+": "); 
+                                                quantidade = scanner.nextInt();
+                                                if(quantidade == 0){
+                                                    break;
+                                                }
+                                                verificacao = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade, true);
+                                                if(verificacao){
+                                                    cli.getCarrinho().addProduto(p, quantidade);
+                                                    EstoqueDeProdutos.removerProduto(codigo, quantidade);
+                                                }  
+                                            }
+                                            if(p instanceof ProdutoQuilo){
+                                                System.out.println("Digite a quantida de quilos de "+p.getNome().toUpperCase()+": "); 
+                                                quantidade = scanner.nextDouble();
+                                                //verifico se tem a quantidade do produto desejado
+                                                verificacao = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade, true);
+                                                if(verificacao){
+                                                    ProdutoQuilo pkg = (ProdutoQuilo) p;
+                                                    cli.getCarrinho().addProduto(p, quantidade);
+                                                    EstoqueDeProdutos.removerProduto(codigo, quantidade);
+                                                } 
+                                            }                                        
                                         }
-                                    }while(opcaoCaixaCompra != 0);
-                                }else {
-                                    Utilitario.ImprimaMensagem("*  Seu carrinho de compras está vazio. Escolha alguns produtos  *");
-                                    sairMenuEscolhaDeCaixas = true;
-                                }
-                                break;
-                            case 3:
-                                Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
-                                String codigo = scanner.next();
-                                
-                                break;
-                            case 0: 
-                                sairMenuCliente = true;
-                                break;
-                            default:
-                                break;
-                        }
-                        cli.getCarrinho().exibirCarrinhoCliente();
-                    }while(!sairMenuCliente);
+
+                                        if(codigo.equals(0) || quantidade == 0){
+                                            continuarComprando = false;
+                                        }
+                                        scanner.nextLine();
+                                    }while(continuarComprando);
+                                    // TODO atribuir os produtos escolhidos ao carrinho do cliente
+                                    //EscolherProduto();
+
+
+                                    sairMenuCliente = false;
+                                    break;
+                                case 2:
+                                    // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
+                                    if (cli.getCarrinho().verificaCarrinho()){
+                                        int opcaoCaixaCompra;
+                                        List<Caixa> caixasDisponiveis = ObtenhaCaixasDisponiveis();
+                                        Utilitario.ImprimaMensagem("*                           CAIXAS                              *");
+                                        do{
+                                            Utilitario.ImprimaMensagem("*                    Selecione um caixa                         *");
+                                            MostrarCaixasEmFuncionamento();
+                                            opcaoCaixaCompra = scanner.nextInt();
+
+                                            if (opcaoCaixaCompra > 0 && opcaoCaixaCompra <= caixasDisponiveis.size()) {
+                                                Caixa caixaSelecionado = caixasDisponiveis.get(Integer.valueOf(opcaoCaixaCompra)-1);
+
+                                                Venda venda = caixaSelecionado.iniciarVenda(cli);
+
+                                                sairMenuCliente = true;
+                                                opcaoCaixaCompra = 0;
+                                                Utilitario.ImprimaMensagem("*           Obrigado por comprar conosco! Volte sempre!         *");
+                                            }
+                                        }while(opcaoCaixaCompra != 0);
+                                    }else {
+                                        Utilitario.ImprimaMensagem("*  Seu carrinho de compras está vazio. Escolha alguns produtos  *");
+                                        sairMenuEscolhaDeCaixas = true;
+                                    }
+                                    break;
+                                case 3:
+                                    Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
+                                    String codigo = scanner.next();
+                                    cli.consultarValor(codigo);
+                                    break;
+                                case 0: 
+                                    sairMenuCliente = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            cli.getCarrinho().exibirCarrinhoCliente();
+                        }while(!sairMenuCliente);
+                    }else {
+                        Utilitario.ImprimaMensagem("*                Nenhum caixa está funcionando!                 *");
+                        break;
+                    }
                     
                     scanner.nextLine();
                     break;
@@ -365,14 +366,14 @@ public class Supermercado{
                 case 1:
                     MenuGerenteAdicionarProduto(gerente);
                     break;
-                case 2: // emitir relatorio estoque
+                case 2: 
+                    MenuGerenteRemoverProduto(gerente);
+                    break;
+                case 3: // emitir relatorio estoque
                     gerente.emitirRelatorioDeEstoque();
                     break;
-                case 3: // emitir relatorio vendas
+                case 4: // emitir relatorio vendas
                     gerente.emitirRelatorioDeVendas(caixas);
-                    // TODO
-                    
-                    System.out.println("emitindo vendas...");
                     break;
                 case 0:
                     sairMenuGer = true;
@@ -383,11 +384,45 @@ public class Supermercado{
             scanner.nextLine();
         }while(!sairMenuGer);
     }
+
+    private static void MenuGerenteRemoverProduto(Gerente gerente) {
+        // remover produto
+        System.out.println("Digite o código do produto: ");
+        String codigoProduto  = scanner.next();
+        Produto p = EstoqueDeProdutos.seekProduto(codigoProduto);
+        if(p != null){
+            boolean verificacao;
+            if(p instanceof ProdutoUnitario){
+                System.out.println("Digite a quantidade de "+p.getNome().toUpperCase()+": "); 
+                int quantidade = scanner.nextInt();
+                if(quantidade == 0){
+                    return;
+                }
+                verificacao = EstoqueDeProdutos.produtoParaCompra(codigoProduto, quantidade, false);
+                if(verificacao){
+                    EstoqueDeProdutos.removerProduto(codigoProduto, quantidade);
+                    System.out.println(quantidade + " unidades de " + p.getNome() + " foram removidos do estoque.");
+                }  
+            }
+            if(p instanceof ProdutoQuilo){
+                System.out.println("Digite a quantida de quilos de " +p.getNome().toUpperCase()+ ": "); 
+                double quantidade = scanner.nextDouble();
+                //verifico se tem a quantidade do produto desejado
+                verificacao = EstoqueDeProdutos.produtoParaCompra(codigoProduto, quantidade, false);
+                if(verificacao){
+                    ProdutoQuilo pkg = (ProdutoQuilo) p;
+                    EstoqueDeProdutos.removerProduto(codigoProduto, quantidade);
+                    System.out.println(quantidade + " quilos de " + p.getNome() + " foram removidos do estoque.");
+                } 
+            }
+            
+        }
+    }
     
     // Método responsável por mostrar o menu do gerente.
     private static void MostrarMenuGerente(){
         Utilitario.ImprimaMensagem("*                      Menu de Gerente                          *");
-        System.out.println(" ( 1 ) Adicionar produto no estoque \n ( 2 ) Emitir relatório de estoque \n ( 3 ) Emitir relatório de vendas \n ( 0 ) Logout ");
+        System.out.println(" ( 1 ) Adicionar produto no estoque \n ( 2 ) Remover produto \n ( 3 ) Emitir relatório de estoque \n ( 4 ) Emitir relatório de vendas \n ( 0 ) Logout ");
         System.out.println();
     }
     
@@ -463,60 +498,6 @@ public class Supermercado{
         }
     }
     
-    // Ações de comprar vários produtos no mercado.
-    /*private static void EscolherProduto(){
-      
-        CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
-        Cliente cli = new Cliente();
-        int continuar = 1;
-            Integer quantidade = 0;
-            String codigo = "";
-        //while(continuar == 1){
-            EstoqueDeProdutos.exibirEstoqueCliente();
-            System.out.println("***** DIGITE O CÓDIGO DO PRODUTO  *****");
-            codigo = scanner.nextLine();
-           
-            List produtos = EstoqueDeProdutos.produtoParaCompra(codigo, quantidade);
-            //se existir produto em estoque, a quantidade e se o produto for por unidade
-            if(produtos != null && String.valueOf(codigo.charAt(codigo.length()-1)).equals(String.valueOf(0)) ){
-                System.out.println("PRODUTO UNITARIO");
-                Produto prod = (Produto) produtos.get(0);
-                System.out.println("***** DIGITE A QUANTIDADE DE "+prod.getNome().toUpperCase()+"  *****");
-                quantidade = Integer.parseInt(scanner.nextLine());
-                //TODO: VERIFICAR SE EXISTE A QUANTIDADE DE PESO DISPONIVEL EM ESTOQUE.
-                 cli.getCarrinho().addProduto(prod, quantidade);
-                 cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + prod.calcularValor(quantidade));
-                //se for produto por kilo, não insere mais de um no carrinho
-            }else if(produtos != null && String.valueOf(codigo.charAt(codigo.length()-1)).equals(String.valueOf(1))){
-                System.out.println("PRODUTO POR PESO");
-
-                Iterator it = produtos.iterator();
-                if(it.hasNext()){
-                    Produto p = (Produto) it.next();
-                     System.out.println("***** QUANTIDADE DE "+p.getNome().toUpperCase()+" EM KILOS *****");
-                    quantidade = Integer.parseInt(scanner.nextLine());
-                    //TODO: VERIFICAR SE EXISTE A QUANTIDADE DE PESO DISPONIVEL EM ESTOQUE.
-                    cli.getCarrinho().addProduto(p, quantidade);
-                    cli.getCarrinho().setValorCompra(cli.getCarrinho().getValorCompra() + p.calcularValor(quantidade));
-                }
-            }
-            //System.out.println("********* DIGITE **********");
-            //
-            //System.out.println(" ( 1 ) - PARA CONTINUAR COMPRANDO ou \n ( 2 ) - PARA SELECIONAR CAIXA  ");
-            //continuar = scanner.nextInt();
-
-            //limpa cache do teclado para a entrada de dados
-            scanner.nextLine();
-            if(continuar == 2){
-                
-               //caixasDisponiveis();
-
-
-            }
-       //}
-        
-    }*/
-   
     // Método responsável por apresentar o menu de cadastro de produtos por unidade.
     private static void WizardAddProdutoUnidade(Gerente gerente) {
         Utilitario.ImprimaMensagem("*                    ADICIONANDO PRODUTO                        *");

@@ -93,13 +93,13 @@ public class CarrinhoDeCompras{
                     System.out.println("Produto: " + p.getNome());
                     mostrarNomeProduto = false;
                 }
-                if (p instanceof ProdutoQuilo) {
-                    ProdutoQuilo pdt = (ProdutoQuilo)p;
-                    System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
-                }
-                if (p instanceof ProdutoUnitario) {
-                    System.out.println("Quantidade no carrinho = " + quantidade + "\n");
-                }
+            }
+            if (p instanceof ProdutoQuilo) {
+                ProdutoQuilo pdt = (ProdutoQuilo)p;
+                System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
+            }
+            if (p instanceof ProdutoUnitario) {
+                System.out.println("Quantidade no carrinho = " + quantidade + "\n");
             }
             quantidade = 0;
         }

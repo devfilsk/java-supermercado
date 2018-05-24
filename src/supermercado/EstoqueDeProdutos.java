@@ -21,10 +21,6 @@ public class EstoqueDeProdutos {
     public static Map<String, List<Produto>> estoque = new LinkedHashMap<String, List<Produto>>();;
     private static Map<String, List<Produto>> copiaDoEstoque;
     private static Produto p;
-    
-//    public EstoqueDeProdutos() {
-//        //estoque = 
-//    }
 
     private static Map<String, List<Produto>> getCopiaDoEstoque() {
         return copiaDoEstoque;
@@ -102,7 +98,8 @@ public class EstoqueDeProdutos {
                 }
             }
             else if (p instanceof ProdutoQuilo){
-                ProdutoQuilo pdtQuilo = (ProdutoQuilo)p;    
+                ProdutoQuilo pdtQuilo = ObtenhaProdutoQuiloTemporario(p);
+                        
                 double peso = pdtQuilo.getQtdQuilos() - quantidade;
                 removerDoEstoque = peso < 0 ? true : false;
                 pdtQuilo.setQtdQuilos(peso);
@@ -136,29 +133,31 @@ public class EstoqueDeProdutos {
         double quilos = 0;
         while (listasDeCodigos.hasNext()) {
             String codigo = (String)listasDeCodigos.next();
-            Iterator produtos = estoqueTemp.get(codigo).iterator();
-            boolean mostrarNomeProduto = true;
-           
-            while (produtos.hasNext()) {
-                p = (Produto)produtos.next();
-                
-                if (mostrarNomeProduto) {
-                    System.out.println("Código: " + codigo);
-                    System.out.println("Produto: " + p.getNome());
-                    mostrarNomeProduto = false;
-                }
-                if (p instanceof ProdutoQuilo) {
-                    ProdutoQuilo pdt = (ProdutoQuilo)p;
-                    System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
+            if (estoqueTemp.get(codigo).size() > 0) { // listar apenas se existir produtos
+                Iterator produtos = estoqueTemp.get(codigo).iterator();
+                boolean mostrarNomeProduto = true;
+
+                while (produtos.hasNext()) {
+                    p = (Produto)produtos.next();
+
+                    if (mostrarNomeProduto) {
+                        System.out.println("Código: " + codigo);
+                        System.out.println("Produto: " + p.getNome());
+                        mostrarNomeProduto = false;
+                    }
+                    if (p instanceof ProdutoQuilo) {
+                        ProdutoQuilo pdt = (ProdutoQuilo)p;
+                        System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
+                    }
+
+                    quantidade++;
                 }
 
-                quantidade++;
+                if (p instanceof ProdutoUnitario) {
+                    System.out.println("Quantidade em estoque = " + quantidade + "\n");
+                }
+                quantidade = 0;
             }
-            
-            if (p instanceof ProdutoUnitario) {
-                System.out.println("Quantidade em estoque = " +quantidade + "\n");
-            }
-            quantidade = 0;
         }
         System.out.println();
     }
@@ -193,14 +192,7 @@ public class EstoqueDeProdutos {
                     return pdt_un;
                 }
                 else if (pdt instanceof ProdutoQuilo){
-                    String codigo_quilo = pdt.getCodigo();
-                    String nome_quilo = pdt.getNome();
-                    double valor_quilo = pdt.getValor();
-                    double qtd_quilo = ((ProdutoQuilo) pdt).getQtdQuilos();
-                    
-                    ProdutoQuilo pdtquilo = new ProdutoQuilo(codigo_quilo, nome_quilo, 
-                            valor_quilo, qtd_quilo);
-                    return pdtquilo;
+                    return ObtenhaProdutoQuiloTemporario(pdt);
                 }
             }
         }else{
@@ -210,7 +202,7 @@ public class EstoqueDeProdutos {
     }
     
     //método que verifica se tem o produto no estoque ou se existe a quanitdade desejada do mesmo, caso alguma dessas afirmações seja falsa, ele retorna null
-    public static boolean produtoParaCompra(String codigo, int quantidade){
+    public static boolean produtoParaCompra(String codigo, double quantidade, Boolean validarQuantidade){
         //Verifica se existe o produto no estoque e se possui a quantidade esperada
         //if(EstoqueDeProdutos.estoque.containsKey(codigo) && EstoqueDeProdutos.estoque.get(codigo).size() >= quantidade){
         boolean retorno = false;
@@ -223,8 +215,14 @@ public class EstoqueDeProdutos {
                     //retorno = produtosDoCodigo.get(0);
                     retorno = true;
                 }else{
-                    Utilitario.ImprimaMensagem("*                    Infelizmente só possuimos "+produtosDoCodigo.size()+" unidades                      *");
-                    retorno = false;
+                    if (validarQuantidade) {
+                        Utilitario.ImprimaMensagem("*                    Infelizmente só possuimos "+produtosDoCodigo.size()+" unidades                      *");
+                        retorno = false;
+                    }
+                    else{
+                        retorno = true;
+                    }
+                    
                 }
             }
             if(produtosDoCodigo.get(0) instanceof ProdutoQuilo){
@@ -285,20 +283,15 @@ public class EstoqueDeProdutos {
         System.out.println();
     }
      
-    //public static EstoqueDeProdutos clonarEstoque(){
-        // Para clonar os valores e nÃ£o a referÃªncia, percorremos todo o estoque 
-        // e copiamos os produtos no novo objeto.
-//        EstoqueDeProdutos estoqueClone = new EstoqueDeProdutos();
-//        for (String codigo : estoque.keySet()) {
-//            estoqueClone.estoque.put(codigo, new LinkedList<Produto>());
-//            List<Produto> lista = estoque.get(codigo);
-//            for (Produto produto : lista) {
-//                estoqueClone.estoque.get(codigo).add(produto);
-//            }
-//        } 
-//        return estoqueClone;
-    //}
-    
+    private static ProdutoQuilo ObtenhaProdutoQuiloTemporario(Produto temp) {
+        String codigo_quilo = temp.getCodigo();
+        String nome_quilo = temp.getNome();
+        double valor_quilo = temp.getValor();
+        double qtd_quilo = ((ProdutoQuilo) temp).getQtdQuilos();
+        ProdutoQuilo pdtQuilo = new ProdutoQuilo(codigo_quilo, nome_quilo,
+                valor_quilo, qtd_quilo);
+        return pdtQuilo;
+    }
      
      // Método responsável por criar o estoque inicial de produtos. Alimentar o sistema.
     public static void Feed(){

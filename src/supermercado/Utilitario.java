@@ -14,7 +14,6 @@ public class Utilitario {
         System.out.println("*****************************************************************");
         System.out.println(mensagem); 
         System.out.println("*****************************************************************");
-        
     }
     
     public static void ImprimaMensagem(String mensagem1, String mensagem2){
