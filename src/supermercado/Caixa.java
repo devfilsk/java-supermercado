@@ -12,7 +12,6 @@ public class Caixa {
     private int numeroDoCaixa;
     private Balanca balanca;
     
-    
     public Caixa(int numero, OperadorDeCaixa operador){
         this.numeroDoCaixa = numero;
         this.operadorCaixa = operador;
@@ -92,7 +91,4 @@ public class Caixa {
        
         return venda;
     }
-    
-    
-    
 }

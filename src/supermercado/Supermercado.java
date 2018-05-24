@@ -19,10 +19,6 @@ import java.util.stream.Collectors;
  */
 public class Supermercado{
 
-    /**
-     * @param args the command line arguments
-     */
-    //static EstoqueDeProdutos listaDeProdutos = new EstoqueDeProdutos();
     private static Scanner scanner = new Scanner(System.in);
     private static List<Funcionario> funcionarios = new ArrayList<Funcionario>();
     private static List<Caixa> caixas = new ArrayList<Caixa>();
@@ -177,7 +173,7 @@ public class Supermercado{
 
                         do{
                             Boolean sairMenuEscolhaDeCaixas = false;
-                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar Preço \n ( 0 ) Sair");
+                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar preço \n ( 4 ) Consultar estoque de produtos \n ( 0 ) Sair");
                             int opcaoCliente = scanner.nextInt();
                             double quantidade = 0;
                             switch (opcaoCliente){
@@ -225,9 +221,6 @@ public class Supermercado{
                                         }
                                         scanner.nextLine();
                                     }while(continuarComprando);
-                                    // TODO atribuir os produtos escolhidos ao carrinho do cliente
-                                    //EscolherProduto();
-
 
                                     sairMenuCliente = false;
                                     break;
@@ -261,6 +254,9 @@ public class Supermercado{
                                     Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
                                     String codigo = scanner.next();
                                     cli.consultarValor(codigo);
+                                    break;
+                                case 4:
+                                    EstoqueDeProdutos.mostrarEstoque(1);
                                     break;
                                 case 0: 
                                     sairMenuCliente = true;

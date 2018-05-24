@@ -13,21 +13,12 @@ public class Funcionario implements IOperacoesDoEstoque{
     private String nome;
     private String userName;
     private String senha;
-//    private EstoqueDeProdutos estoqueDeProdutos;
 
     public Funcionario(String nome, String userName, String senha) {
         this.nome = nome;
-    //    this.estoqueDeProdutos = estoque;
         this.userName = userName;
         this.senha = senha;
     }
-    
-//    public Funcionario(String nome, String userName, String senha, EstoqueDeProdutos estoque) {
-//        this.nome = nome;
-//        this.estoqueDeProdutos = estoque;
-//        this.userName = userName;
-//        this.senha = senha;
-//    }
 
     public String getNome() {
         return nome;
@@ -36,14 +27,6 @@ public class Funcionario implements IOperacoesDoEstoque{
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-//    public EstoqueDeProdutos getEstoqueDeProdutos() {
-//        return estoqueDeProdutos;
-//    }
-//
-//    public void setEstoqueDeProdutos(EstoqueDeProdutos estoqueDeProdutos) {
-//        this.estoqueDeProdutos = estoqueDeProdutos;
-//    }
     
     public String getUserName() {
         return userName;

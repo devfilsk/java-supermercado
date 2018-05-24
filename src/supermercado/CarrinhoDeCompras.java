@@ -22,12 +22,15 @@ public class CarrinhoDeCompras{
     public Map getProdutosCarrinho(){
         return this.produtosCarrinho;
     }
+    
     public double getValorCompra(){
         return this.valorCompra;
     }
+    
     public void setValorCompra(double valor){
         this.valorCompra = valor;
     }
+    
     public void addProduto(Produto produto, double quantidade){
         List<Produto> produtosDoCodigo;
         String codigo = produto.getCodigo();
@@ -130,16 +133,14 @@ public class CarrinhoDeCompras{
            
            while(produtos.hasNext()){
                Produto produtoList = (Produto) produtos.next();
-               
-               
-                //Fazer a variavel "valorTotal" receber o valor do calculo por kilo
+
+               //Fazer a variavel "valorTotal" receber o valor do calculo por kilo
                 if(produtoList instanceof ProdutoQuilo){
                     //Pega a quantidade de kilos e o valor do peso para que a balança possa calcular
                     ProdutoQuilo produtokg = (ProdutoQuilo) list.get(0);
                     valorPeso = produtokg.getValor();
                     ktdKilo = produtokg.getQtdQuilos();
                     valorTotal += Balanca.calcularValorPorPeso(valorPeso,ktdKilo);
-                    
                 }
                 //Fazer a variavel "valorTotal" receber o valor do calculo por Unidade
                 else if(produtoList instanceof ProdutoUnitario){

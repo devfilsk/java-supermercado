@@ -15,14 +15,10 @@ public class Cliente {
     public CarrinhoDeCompras getCarrinho() {
         return carrinho;
     }
-    
 
     //Para realizar a compra, o cliente escolhe um caixa disponível
     public void realizarCompra(Caixa caixa){
         caixa.iniciarVenda(this);
-    }
-    public void addProdutoPorCodigo(String codigo){
-        
     }
     
     public void consultarValor(String codigo){
