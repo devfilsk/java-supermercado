@@ -140,7 +140,7 @@ public class CarrinhoDeCompras{
         }else{
             System.out.println("*             Você não possui produtos no carrinho              *");
         }
-        System.out.println();
+        Utilitario.Continuar();
     }
     
     //Verifica se o carrinho de compras está vazio
