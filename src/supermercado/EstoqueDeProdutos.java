@@ -294,9 +294,9 @@ public class EstoqueDeProdutos {
      
      // Método responsável por criar o estoque inicial de produtos. Alimentar o sistema.
     public static void Feed(){
-        System.out.println("*****************************************************************");
-        System.out.println("*              Carga inicial do estoque de produtos             *");
-        System.out.println("*                            Aguarde...                         *");
+           System.out.println("*****************************************************************");
+           System.out.println("*              Carga inicial do estoque de produtos             *");
+           System.out.println("*                            Aguarde...                         *");
         ProdutoUnitario leite = new ProdutoUnitario("10", "Leite", 2.50);
         adicionarProduto(leite, 2.0);
         

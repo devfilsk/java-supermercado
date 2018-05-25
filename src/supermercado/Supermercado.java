@@ -173,18 +173,24 @@ public class Supermercado{
 
                         do{
                             Boolean sairMenuEscolhaDeCaixas = false;
-                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar preço \n ( 4 ) Consultar estoque de produtos \n ( 0 ) Sair");
+                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar preço \n ( 4 ) Consultar estoque de produtos \n ( 5 ) Mostrar Carrinho de Compras \n ( 0 ) Sair");
                             int opcaoCliente = scanner.nextInt();
                             double quantidade = 0;
                             switch (opcaoCliente){
                                 case 1:
                                     boolean continuarComprando = true;
-                                     Utilitario.ImprimaMensagem("*          Digite ( 0 ) para voltar ao menu a qualquer momento! ");
+                                     Utilitario.ImprimaMensagem(
+                                             "*          ( 0 ) Para voltar ao menu a qualquer momento!       *",
+                                             "*          ( 1 ) Para Cancelar a compra!                       *");
                                     do{
                                         System.out.println("Digite o código do produto");
                                         String codigo = scanner.next();
                                             if(codigo.equals("0")){
                                                     break;
+                                            }
+                                            if(codigo.equals("1")){
+                                                cli.getCarrinho().devolverProdutosCarrinho();
+                                                break;
                                             }
                                         //busca o produto pelo código passado pelo cliente, verificando a disponibilidade do mesmo no método seekProduto
                                         Produto p = EstoqueDeProdutos.seekProduto(codigo);
@@ -218,8 +224,11 @@ public class Supermercado{
                                             System.out.println("Produto de código " + codigo + " não encontrado no estoque.");   
                                         }
 
-                                        if(codigo.equals(0) || quantidade == 0){
+                                        if(codigo.equals(0) || quantidade == 0 || quantidade == 1 || codigo.equals(1)){
                                             continuarComprando = false;
+                                            if(codigo.equals(1)){
+                                                cli.getCarrinho().devolverProdutosCarrinho();
+                                            }
                                         }
                                         scanner.nextLine();
                                     }while(continuarComprando);
@@ -227,7 +236,7 @@ public class Supermercado{
                                     sairMenuCliente = false;
                                     break;
                                 case 2:
-                                    // TODO só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
+                                    // só prossegue com a listagem dos caixas se o cliente possuir itens no carrinho
                                     if (cli.getCarrinho().verificaCarrinho()){
                                         int opcaoCaixaCompra;
                                         List<Caixa> caixasDisponiveis = ObtenhaCaixasDisponiveis();
@@ -252,21 +261,25 @@ public class Supermercado{
                                         sairMenuEscolhaDeCaixas = true;
                                     }
                                     break;
-                                case 3:
+                                case 3: // Consultar preços 
                                     Utilitario.ImprimaMensagem("*                   Informe o código do produto                 *");
                                     String codigo = scanner.next();
                                     cli.consultarValor(codigo);
                                     break;
-                                case 4:
+                                case 4: //Mostrar estoque do mercado
                                     EstoqueDeProdutos.mostrarEstoque(1);
+                                    break;
+                                case 5: //Mostrar Carrinho de compras
+                                    Utilitario.ImprimaMensagem("*                    Seu Carrinho de Compras                    *");
+                                    cli.getCarrinho().exibirCarrinhoCliente();
                                     break;
                                 case 0: 
                                     sairMenuCliente = true;
+                                    cli.getCarrinho().devolverProdutosCarrinho();
                                     break;
                                 default:
                                     break;
                             }
-                            cli.getCarrinho().exibirCarrinhoCliente();
                         }while(!sairMenuCliente);
                     }else {
                         Utilitario.ImprimaMensagem("*                Nenhum caixa está funcionando!                 *");

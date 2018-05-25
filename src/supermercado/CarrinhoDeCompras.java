@@ -1,4 +1,5 @@
 
+
 package supermercado;
 
 import java.util.ArrayList;
@@ -77,34 +78,67 @@ public class CarrinhoDeCompras{
         }
     }
     
+    public void devolverProdutosCarrinho(){
+        if(this.produtosCarrinho.size() > 0){
+            String codigo;
+            int quantidade;
+           Iterator it = produtosCarrinho.keySet().iterator();
+           while(it.hasNext()){
+               codigo = (String) it.next();
+               Iterator itProd = produtosCarrinho.get(codigo).iterator();
+               while(itProd.hasNext()){
+                    quantidade = produtosCarrinho.get(codigo).size();
+                    Produto prod = (Produto) itProd.next();
+                    
+                    if(prod instanceof ProdutoUnitario){
+                        EstoqueDeProdutos.adicionarProduto(prod, quantidade);
+                    }
+                    if(prod instanceof ProdutoQuilo){
+                        ProdutoQuilo prodKg = (ProdutoQuilo) prod;
+                        double kilos = prodKg.getQtdQuilos();
+                        EstoqueDeProdutos.adicionarProduto(prodKg, kilos);
+                    }
+               }               
+           }
+           this.produtosCarrinho.clear();
+            Utilitario.ImprimaMensagem("*   COMPRA CANCELADA, VOCÊ NÃO POSSUI MAIS PRODUTOS NO SEU CARRINHO!   *");
+            exibirCarrinhoCliente();
+        }
+    }
+    
     public void exibirCarrinhoCliente(){
         Produto p = null;
-        System.out.println("***** PRODUTOS NO CARRINHO *****");
+        
         Iterator it = produtosCarrinho.keySet().iterator();
-        int quantidade = 0;
-        double quilos = 0;
-        while (it.hasNext()) {
-            String codigo = (String)it.next();
-            Iterator produtos = produtosCarrinho.get(codigo).iterator();
-            boolean mostrarNomeProduto = true;
-            List prodUnidade = (List) produtosCarrinho.get(codigo);
-            while (produtos.hasNext()) {
-                p = (Produto)produtos.next();
-                quantidade++;
-                if (mostrarNomeProduto) {
-                    System.out.println("Código: " + codigo);
-                    System.out.println("Produto: " + p.getNome());
-                    mostrarNomeProduto = false;
+        if(produtosCarrinho.size() > 0){
+            System.out.println("***** PRODUTOS NO CARRINHO *****");
+            int quantidade = 0;
+            double quilos = 0;
+            while (it.hasNext()) {
+                String codigo = (String)it.next();
+                Iterator produtos = produtosCarrinho.get(codigo).iterator();
+                boolean mostrarNomeProduto = true;
+                List prodUnidade = (List) produtosCarrinho.get(codigo);
+                while (produtos.hasNext()) {
+                    p = (Produto)produtos.next();
+                    quantidade++;
+                    if (mostrarNomeProduto) {
+                        System.out.println("Código: " + codigo);
+                        System.out.println("Produto: " + p.getNome());
+                        mostrarNomeProduto = false;
+                    }
                 }
+                if (p instanceof ProdutoQuilo) {
+                    ProdutoQuilo pdt = (ProdutoQuilo)p;
+                    System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
+                }
+                if (p instanceof ProdutoUnitario) {
+                    System.out.println("Quantidade no carrinho = " + quantidade + "\n");
+                }
+                quantidade = 0;
             }
-            if (p instanceof ProdutoQuilo) {
-                ProdutoQuilo pdt = (ProdutoQuilo)p;
-                System.out.println("Quilos: " + pdt.getQtdQuilos() + "kg\n");
-            }
-            if (p instanceof ProdutoUnitario) {
-                System.out.println("Quantidade no carrinho = " + quantidade + "\n");
-            }
-            quantidade = 0;
+        }else{
+            System.out.println("*             Você não possui produtos no carrinho              *");
         }
         System.out.println();
     }
