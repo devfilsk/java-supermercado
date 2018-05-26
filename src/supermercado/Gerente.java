@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public class Gerente extends Funcionario {
     

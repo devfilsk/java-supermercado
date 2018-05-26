@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public class Supermercado{
 
@@ -172,15 +172,15 @@ public class Supermercado{
 
                         do{
                             Boolean sairMenuEscolhaDeCaixas = false;
-                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar preço \n ( 4 ) Consultar estoque de produtos \n ( 5 ) Mostrar Carrinho de Compras \n ( 0 ) Sair");
+                            System.out.println(" ( 1 ) Escolher produtos \n ( 2 ) Comprar \n ( 3 ) Consultar preço \n ( 4 ) Consultar estoque de produtos \n ( 5 ) Ver Carrinho de Compras \n ( 0 ) Sair");
                             int opcaoCliente = scanner.nextInt();
                             double quantidade = 0;
                             switch (opcaoCliente){
                                 case 1:
                                     boolean continuarComprando = true;
                                      Utilitario.ImprimaMensagem(
-                                             "*          ( 0 ) Para voltar ao menu a qualquer momento!       *",
-                                             "*          ( 1 ) Para Cancelar a compra!                       *");
+                                             "*          ( 0 ) Para voltar ao menu a qualquer momento!        *",
+                                             "*          ( 1 ) Para Cancelar a compra!                        *");
                                     do{
                                         System.out.println("Digite o código do produto");
                                         String codigo = scanner.next();

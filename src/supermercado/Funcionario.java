@@ -7,7 +7,7 @@ package supermercado;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public class Funcionario implements IOperacoesDoEstoque{
     private String nome;

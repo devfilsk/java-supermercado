@@ -7,7 +7,7 @@ package supermercado;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 interface IOperacoesDoEstoque {
     public void adicionarProduto(Produto produto, double quantidade);

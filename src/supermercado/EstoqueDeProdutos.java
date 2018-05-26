@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public class EstoqueDeProdutos {
     // key = codigo do produto , value = lista com a quantidade do mesmo produto em estoque

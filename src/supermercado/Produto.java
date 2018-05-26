@@ -7,7 +7,7 @@ package supermercado;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public abstract class Produto {
     private String nome;

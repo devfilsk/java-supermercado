@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Richiely Batista
+ * @author Richiely Batista, Filipe Maciel
  */
 public class Utilitario {
     private static Scanner scanner = new Scanner(System.in);
