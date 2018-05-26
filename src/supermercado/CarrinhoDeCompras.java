@@ -85,20 +85,18 @@ public class CarrinhoDeCompras{
            Iterator it = produtosCarrinho.keySet().iterator();
            while(it.hasNext()){
                codigo = (String) it.next();
-               Iterator itProd = produtosCarrinho.get(codigo).iterator();
-               while(itProd.hasNext()){
-                    quantidade = produtosCarrinho.get(codigo).size();
-                    Produto prod = (Produto) itProd.next();
-                    
-                    if(prod instanceof ProdutoUnitario){
-                        EstoqueDeProdutos.adicionarProduto(prod, quantidade);
-                    }
-                    if(prod instanceof ProdutoQuilo){
-                        ProdutoQuilo prodKg = EstoqueDeProdutos.ObtenhaProdutoQuiloTemporario(prod);
-                        double kilos = prodKg.getQtdQuilos();
-                        EstoqueDeProdutos.adicionarProduto(prodKg, prodKg.getQtdQuilos());
-                    }
-               }               
+               List produtos = produtosCarrinho.get(codigo);
+               quantidade = produtos.size();
+               Produto produto_devolucao = (Produto)produtos.get(0);
+
+                if(produto_devolucao instanceof ProdutoUnitario){
+                    EstoqueDeProdutos.adicionarProduto(produto_devolucao, quantidade);
+                }
+                if(produto_devolucao instanceof ProdutoQuilo){
+                    ProdutoQuilo prodKg = EstoqueDeProdutos.ObtenhaProdutoQuiloTemporario(produto_devolucao);
+                    double kilos = prodKg.getQtdQuilos();
+                    EstoqueDeProdutos.adicionarProduto(prodKg, kilos);
+                }
            }
            this.produtosCarrinho.clear();
             Utilitario.ImprimaMensagem("*   COMPRA CANCELADA, VOCÊ NÃO POSSUI MAIS PRODUTOS NO SEU CARRINHO!   *");
