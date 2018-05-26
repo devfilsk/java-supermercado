@@ -46,7 +46,7 @@ public class EstoqueDeProdutos {
                 }
                 else if (produto instanceof ProdutoQuilo) {
                     ProdutoQuilo pdt = ObtenhaProdutoQuiloTemporario(produto);
-                    pdt.setQtdQuilos(pdt.getQtdQuilos() +  quantidade);
+                    pdt.setQtdQuilos(((ProdutoQuilo)produtosDoCodigo.get(0)).getQtdQuilos() +  quantidade);
                     produtosDoCodigo = new LinkedList<Produto>();
                     produtosDoCodigo.add(pdt);
                 }
@@ -282,7 +282,7 @@ public class EstoqueDeProdutos {
         System.out.println();
     }
      
-    private static ProdutoQuilo ObtenhaProdutoQuiloTemporario(Produto temp) {
+    public static ProdutoQuilo ObtenhaProdutoQuiloTemporario(Produto temp) {
         String codigo_quilo = temp.getCodigo();
         String nome_quilo = temp.getNome();
         double valor_quilo = temp.getValor();

@@ -94,9 +94,9 @@ public class CarrinhoDeCompras{
                         EstoqueDeProdutos.adicionarProduto(prod, quantidade);
                     }
                     if(prod instanceof ProdutoQuilo){
-                        ProdutoQuilo prodKg = (ProdutoQuilo) prod;
+                        ProdutoQuilo prodKg = EstoqueDeProdutos.ObtenhaProdutoQuiloTemporario(prod);
                         double kilos = prodKg.getQtdQuilos();
-                        EstoqueDeProdutos.adicionarProduto(prodKg, kilos);
+                        EstoqueDeProdutos.adicionarProduto(prodKg, prodKg.getQtdQuilos());
                     }
                }               
            }
